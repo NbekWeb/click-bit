@@ -1,0 +1,26 @@
+<script setup>
+import { RouterView } from "vue-router";
+import { reactive } from "vue";
+import { ConfigProvider } from "ant-design-vue";
+
+const theme = reactive({
+  token: {
+    colorPrimary: "#ff4d4f",
+    borderRadius: 8,
+    colorSuccess: "#52c41a",
+    colorWarning: "#faad14",
+    colorError: "#f5222d",
+    colorInfo: "#1890ff",
+  },
+});
+</script>
+
+<template>
+  <ConfigProvider :theme="theme">
+    <div class="bg-dark-100 min-h-screen px-3 text-white">
+      <router-view />
+    </div>
+  </ConfigProvider>
+</template>
+
+<style scoped></style>

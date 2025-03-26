@@ -1,0 +1,61 @@
+@import "tailwindcss";
+@import url("./fonts.css");
+* {
+  box-sizing: border-box;
+}
+
+@theme {
+  --color-dark-100: #1a1615;
+  --color-dark-200: #262323;
+  --color-dark-300: #343131;
+  --color-gray-200: #afafaf;
+  --color-gray-400: #4e4949;
+  --color-orange-500: #ffa800;
+}
+
+.btn-orange-rounded,
+.btn-orange {
+  position: relative;
+  box-shadow: 0px 0px 5px 1px rgba(255, 122, 0, 0.4);
+}
+.btn-orange-rounded,
+.btn-orange-rounded::before {
+  border-radius: 50%;
+}
+.btn-orange,
+.btn-orange::before {
+  border-radius: 8px;
+}
+
+.btn-orange-rounded::before,
+.btn-orange::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: linear-gradient(90deg, #ff4d00 0%, #ffa800 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.btn-orange:hover,
+.btn-orange-rounded:hover {
+  cursor: pointer;
+}
+
+.text-min {
+  font-size: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #ff4d00 0%, #ffa800 100%);
+}
+
+.text-primary {
+  background: linear-gradient(90deg, #ff4d00 65.81%, #ffa800 82.35%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

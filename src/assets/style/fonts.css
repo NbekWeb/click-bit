@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("../fonts/proximanova_bold.otf") format("opentype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("../fonts/proximanova_regular.ttf") format("truetype");
+  font-weight: 400;
+}
+
+.font-nova {
+  font-family: "Proxima Nova";
+}
+
+.font-inter {
+  font-family: "Inter";
+}
