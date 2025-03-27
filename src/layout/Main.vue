@@ -22,7 +22,7 @@ import Navbar from "@/components/Navbar.vue";
         class="flex items-center gap-3 flex-grow h-full bg-dark-200 rounded-xl px-2"
       >
         <div
-          class="flex text-base justify-between items-center flex-grow my-2 border-r border-gray-400 pr-1"
+          class="flex text-base justify-between items-center flex-grow my-2 border-r border-gray-400 pr-1.5"
         >
           <div class="flex items-center gap-0.5">
             <span
@@ -36,7 +36,7 @@ import Navbar from "@/components/Navbar.vue";
             <span
               class="btn-orange-rounded text-min w-6 h-6 flex items-center justify-center font-bold"
             >
-              <send class="text-base" />
+              <send class="text-sm" />
             </span>
             <span class="">10,000</span>
           </div>
@@ -44,7 +44,7 @@ import Navbar from "@/components/Navbar.vue";
             <span
               class="btn-orange-rounded text-min w-6 h-6 flex items-center justify-center font-bold"
             >
-              <ton class="text-lg" />
+              <ton class="text-xl" />
             </span>
             <span class="">10,000</span>
           </div>

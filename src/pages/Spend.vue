@@ -17,7 +17,7 @@ import { RouterLink } from "vue-router";
     <div class="mt-4 grid grid-cols-2 gap-2.5">
       <template v-for="i in 6" :key="i">
         <router-link :to="{ name: 'CardOne', params: { id: i } }">
-          <img src="@/assets/img/amazon.png" />
+          <img src="@/assets/img/amazon.png" class="w-full" />
         </router-link>
       </template>
     </div>

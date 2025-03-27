@@ -50,7 +50,7 @@ const tasks = [
         >BIT</span
       >
       <div class="flex flex-col gap-0">
-        <span class="text-sm font-semibold"> Invite a friend </span>
+        <span class="text-base font-semibold"> Invite a friend </span>
         <p class="text-xs !mb-0">
           <span class="text-primary">+100 BITs</span> For every referral you
           make
@@ -61,12 +61,13 @@ const tasks = [
       <button
         class="flex-grow flex items-center justify-center h-full btn-primary rounded-lg"
       >
-        invite friends
+        <span class="text-sm font-semibold capitalize"> invite friends </span>
       </button>
       <button
         class="px-4 flex gap-2 items-center justify-center h-full btn-primary rounded-lg"
       >
-        Copy
+        
+        <span class="text-sm font-semibold capitalize"> Copy </span>
         <copy class="text-lg" />
       </button>
     </div>

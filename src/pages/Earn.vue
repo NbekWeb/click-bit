@@ -73,7 +73,7 @@ const slideNext = () => {
               class="font-bold font-nova text-min w-6 h-6 flex items-center justify-center btn-orange-rounded"
               >BIT</span
             >
-            <span class="font-thin"> BIT </span>
+            <span class=""> BIT </span>
           </div>
           <div
             class="h-13 rounded-lg bg-dark-100 w-full px-3 flex items-center justify-end"
@@ -94,7 +94,7 @@ const slideNext = () => {
               <send class="text-sm"/>
               </span
             >
-            <span class="font-thin uppercase"> Click </span>
+            <span class=" uppercase"> Click </span>
           </div>
           <div
             class="h-13 rounded-lg bg-dark-100 w-full px-3 flex items-center justify-end"

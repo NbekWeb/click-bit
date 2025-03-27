@@ -13,7 +13,9 @@ defineProps({
       <button
         class="flex justify-center bg-dark-200 items-center h-7 w-full btn-orange"
       >
-        LeveL {{ data?.level }}
+        <span class="uppercase text-sm font-semibold">
+          LeveL {{ data?.level }}
+        </span>
       </button>
     </div>
     <div class="w-full bg-dark-200 rounded-xl -mt-3.5 py-3 px-2.5">
@@ -36,10 +38,8 @@ defineProps({
             >Conversion Rate:
             <span class="text-primary font-semibold"> 50%</span>
           </span>
-          <button
-            class="btn-primary text-sm h-8 rounded-lg w-full font-semibold hover:opacity-80"
-          >
-            Buy
+          <button class="btn-primary h-8 rounded-lg w-full hover:opacity-80">
+            <span class="text-sm font-semibold"> Buy </span>
           </button>
         </div>
       </div>

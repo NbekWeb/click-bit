@@ -23,16 +23,16 @@ const decrease = () => {
   <div>
     <img src="@/assets/img/amazon.svg" class="w-full" />
     <div class="mt-5 py-3.5 px-4 bg-dark-200 rounded-3xl">
-      <span class="pl-3.5 font-semibold font-nova uppercase text-xs">
+      <span class="pl-3.5 font-semibold font-nova uppercase text-sm">
         Select gift card value
       </span>
       <div
-        class="mt-5 h-6 flex items-center justify-between rounded-lg bg-dark-100"
+        class="mt-5 h-7 text-sm flex items-center justify-between rounded-lg bg-dark-100"
       >
-        <span class="flex pl-4 text-xs opacity-70">Select quantity</span>
+        <span class="flex pl-4  opacity-70">Select quantity</span>
         <div class="bg-black h-full p-0.5 rounded-lg">
           <div
-            class="bg-dark-200 h-full flex items-center gap-2.5 px-4 text-xs rounded-lg"
+            class="bg-dark-200 h-full flex items-center gap-2.5 px-4  rounded-lg"
           >
             <span class="hover:cursor-pointer" @click="increase">-</span>
             <span class="flex min-w-5 justify-center">{{ count }}</span>
@@ -53,7 +53,7 @@ const decrease = () => {
               :class="current == i ? 'bg-orange-500' : 'bg-white'"
             ></span>
             <div class="flex flex-col gap-1 opacity-80">
-              <span>Amazon</span>
+              <span class="text-sm">Amazon</span>
               <span>Digital gift card</span>
             </div>
           </div>
@@ -66,9 +66,12 @@ const decrease = () => {
     <div class="mt-3.5 flex flex-col gap-2">
       <span class="text-xs">Terms and Conditions*</span>
       <button
-        class="text-sm h-12 btn-primary rounded-xl w-full hover:opacity-80"
+        class=" h-12 btn-primary rounded-xl w-full hover:opacity-80"
       >
+      <span class="text-sm font-semibold">
+
         Proceed to check out
+      </span>
       </button>
     </div>
   </div>
