@@ -2,19 +2,8 @@
 import { RouterView } from "vue-router";
 import { reactive, onMounted, ref } from "vue";
 import { ConfigProvider } from "ant-design-vue";
-import { init, getLaunchParams } from "@telegram-apps/sdk-vue";
-
-const initData = ref(null);
-
-onMounted(() => {
-  try {
-    init(); // Initialize Telegram SDK
-    initData.value = getLaunchParams();
-    console.log("initData:", initData.value);
-  } catch (error) {
-    console.error("Error initializing Telegram SDK:", error);
-  }
-});
+const initData = window.Telegram.WebApp.initData;
+console.log(initData);
 
 const theme = reactive({
   token: {
