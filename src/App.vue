@@ -2,7 +2,11 @@
 import { RouterView } from "vue-router";
 import { reactive, onMounted, ref } from "vue";
 import { ConfigProvider } from "ant-design-vue";
-const initData = window.Telegram.WebApp.initData;
+
+import { initInitData } from "@telegram-apps/sdk";
+
+const initData = initInitData();
+
 console.log(initData);
 
 const theme = reactive({
