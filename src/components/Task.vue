@@ -12,7 +12,7 @@ defineProps({
   >
     <img :src="data.icon" class="h-7" />
     <div class="flex flex-col">
-      <span class="text-base">{{ data.title }}</span>
+      <span class="text-base font-semibold">{{ data.title }}</span>
       <span class="text-xs text-primary font-semibold font-nova"
         >+{{ data.count }} BITs
       </span>
