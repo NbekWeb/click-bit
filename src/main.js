@@ -5,9 +5,7 @@ import App from "./App.vue";
 import "ant-design-vue/dist/reset.css";
 import Antd from "ant-design-vue";
 import router from "./routers";
-import { init } from '@telegram-apps/sdk-vue';
 
-init();
 
 const app = createApp(App);
 
