@@ -1,7 +1,8 @@
-@import "tailwindcss";
 @import url("./fonts.css");
+@import "tailwindcss";
 * {
   box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
 @theme {
