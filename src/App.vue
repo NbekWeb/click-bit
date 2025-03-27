@@ -15,7 +15,7 @@ const theme = reactive({
 });
 
 onMounted(() => {
-  const initData = window.Telegram.WebApp.initData;
+  const initData = window?.Telegram?.WebApp?.initData;
   console.log(initData);
 });
 </script>
