@@ -35,7 +35,7 @@ const decrease = () => {
             class="bg-dark-200 h-full flex items-center gap-2.5 px-4 rounded-lg text-base"
           >
             <span class="hover:cursor-pointer" @click="increase">-</span>
-            <span class="flex min-w-5 justify-center">{{ count }}</span>
+            <span class="flex min-w-5 justify-center font-semibold">{{ count }}</span>
             <span class="hover:cursor-pointer" @click="decrease">+</span>
           </div>
         </div>

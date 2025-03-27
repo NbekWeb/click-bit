@@ -25,7 +25,7 @@ const menuItems = [
       v-for="(item, index) in menuItems"
       :key="index"
       :to="{ name: item.to }"
-      class="flex flex-col items-center gap-1"
+      class="flex flex-col items-center gap-0.5"
     >
       <div
         class="w-10 h-10 rounded-full flex items-center justify-center"
