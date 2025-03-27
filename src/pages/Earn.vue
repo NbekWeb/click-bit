@@ -9,9 +9,15 @@ import { LeftOutlined, RightOutlined } from "@ant-design/icons-vue";
 import FormatInput from "@/components/FormatInput.vue";
 import swap from "@/components/icons/swap.vue";
 import send from "@/components/icons/send.vue";
+import Required from "@/components/Required.vue";
 
 const modules = [Navigation];
 const swiperInstance = ref(null);
+const requiredRef = ref(null);
+
+const handleSwapClick = () => {
+  requiredRef.value?.showDrawer();
+};
 
 const onSwiper = (swiper) => {
   swiperInstance.value = swiper;
@@ -90,11 +96,10 @@ const slideNext = () => {
           <div class="flex items-center gap-1">
             <span
               class="font-bold font-nova text-min w-6 h-6 flex items-center justify-center btn-orange-rounded"
-              >
-              <send class="text-sm"/>
-              </span
             >
-            <span class=" uppercase"> Click </span>
+              <send class="text-sm" />
+            </span>
+            <span class="uppercase"> Click </span>
           </div>
           <div
             class="h-13 rounded-lg bg-dark-100 w-full px-3 flex items-center justify-end"
@@ -104,6 +109,7 @@ const slideNext = () => {
         </div>
       </div>
       <button
+        @click="handleSwapClick"
         class="font-nova font-bold h-12 flex w-full justify-center items-center btn-orange"
       >
         SWAP
@@ -116,6 +122,7 @@ const slideNext = () => {
         CLICK TO EARN
       </button>
     </div>
+    <Required ref="requiredRef" />
   </div>
 </template>
 

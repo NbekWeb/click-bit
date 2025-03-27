@@ -1,4 +1,5 @@
 @import url("./fonts.css");
+@import url("./ant.css");
 @import "tailwindcss";
 * {
   box-sizing: border-box;
