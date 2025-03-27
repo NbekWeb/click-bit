@@ -14,9 +14,12 @@ const theme = reactive({
   },
 });
 
-onMounted(() => {
-  const initData = window?.Telegram?.WebApp?.initData;
-  console.log(initData);
+const initData = ref(null);
+
+onMounted(async () => {
+  const { webApp } = await init();
+  initData.value = webApp.initDataUnsafe;
+  console.log(initData.value);
 });
 </script>
 
