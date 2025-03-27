@@ -27,12 +27,12 @@ const decrease = () => {
         Select gift card value
       </span>
       <div
-        class="mt-5 h-7 text-sm flex items-center justify-between rounded-lg bg-dark-100"
+        class="mt-5 h-7.5 text-sm flex items-center justify-between rounded-lg bg-dark-100"
       >
-        <span class="flex pl-4  opacity-70">Select quantity</span>
+        <span class="flex pl-4 opacity-90 font-semibold">Select quantity</span>
         <div class="bg-black h-full p-0.5 rounded-lg">
           <div
-            class="bg-dark-200 h-full flex items-center gap-2.5 px-4  rounded-lg"
+            class="bg-dark-200 h-full flex items-center gap-2.5 px-4 rounded-lg text-base"
           >
             <span class="hover:cursor-pointer" @click="increase">-</span>
             <span class="flex min-w-5 justify-center">{{ count }}</span>
@@ -52,9 +52,9 @@ const decrease = () => {
               class="flex w-3.5 h-3.5 rounded-full"
               :class="current == i ? 'bg-orange-500' : 'bg-white'"
             ></span>
-            <div class="flex flex-col gap-1 opacity-80">
-              <span class="text-sm">Amazon</span>
-              <span>Digital gift card</span>
+            <div class="flex flex-col">
+              <span class="text-sm font-semibold">Amazon</span>
+              <span class="opacity-80">Digital gift card</span>
             </div>
           </div>
           <span class="font-semibold text-sm"
@@ -65,13 +65,8 @@ const decrease = () => {
     </div>
     <div class="mt-3.5 flex flex-col gap-2">
       <span class="text-xs">Terms and Conditions*</span>
-      <button
-        class=" h-12 btn-primary rounded-xl w-full hover:opacity-80"
-      >
-      <span class="text-sm font-semibold">
-
-        Proceed to check out
-      </span>
+      <button class="h-12 btn-primary rounded-xl w-full hover:opacity-80">
+        <span class="text-sm font-semibold"> Proceed to check out </span>
       </button>
     </div>
   </div>
