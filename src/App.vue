@@ -3,11 +3,11 @@ import { RouterView } from "vue-router";
 import { reactive, onMounted, ref } from "vue";
 import { ConfigProvider } from "ant-design-vue";
 
-import { initInitData } from "@telegram-apps/sdk";
-
-const initData = initInitData();
-
-console.log(initData);
+onMounted(() => {
+  let tg = window.Telegram.WebApp;
+  const initData = tg.initData;
+  console.log(initData);
+});
 
 const theme = reactive({
   token: {
