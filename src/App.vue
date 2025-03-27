@@ -2,6 +2,11 @@
 import { RouterView } from "vue-router";
 import { reactive, onMounted, ref } from "vue";
 import { ConfigProvider } from "ant-design-vue";
+import { useLaunchParams } from "@telegram-apps/sdk-vue";
+
+const launchParams = useLaunchParams();
+
+console.log(launchParams.initData);
 
 const theme = reactive({
   token: {
@@ -12,14 +17,6 @@ const theme = reactive({
     colorError: "#f5222d",
     colorInfo: "#1890ff",
   },
-});
-
-const initData = ref(null);
-
-onMounted(async () => {
-  const { webApp } = await init();
-  initData.value = webApp.initDataUnsafe;
-  console.log(initData.value);
 });
 </script>
 
