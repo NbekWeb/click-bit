@@ -3,39 +3,6 @@ import { RouterView } from "vue-router";
 import { reactive, onMounted, ref } from "vue";
 import { ConfigProvider } from "ant-design-vue";
 
-onMounted(() => {
-  let tg = window.Telegram.WebApp;
-  const initData = tg.initData;
-  console.log(initData);
-});
-onMounted(async () => {
-  const payload = {
-    initData: window.Telegram.WebApp.initData,
-  };
-
-  try {
-    const response = await fetch(
-      "https://app.istombroker.ru/api/telegram/auth/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
-
-    const data = await response.json();
-    console.log("Response:", data);
-  } catch (error) {
-    console.error("Error:", error);
-  }
-});
-
 const theme = reactive({
   token: {
     colorPrimary: "#ff4d4f",

@@ -5,8 +5,13 @@ import Market from "@/pages/Market.vue";
 import Spend from "@/pages/Spend.vue";
 import CardOne from "@/pages/CardOne.vue";
 import Refer from "@/pages/Refer.vue";
-
+import Login from "@/pages/Login.vue";
 const routes = [
+  {
+    path: "/login",
+    component: Login,
+    name: "Login",
+  },
   {
     path: "/",
     component: Main,
@@ -43,6 +48,20 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const accessToken = localStorage.getItem("access_token");
+
+  if (to.name === "Login" && accessToken) {
+    return next("Earn");
+  }
+
+  if (accessToken) {
+    next();
+  } else {
+    next({ name: "Login" });
+  }
 });
 
 export default router;

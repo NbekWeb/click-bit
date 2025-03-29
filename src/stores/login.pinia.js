@@ -2,10 +2,10 @@ import { defineStore } from "pinia";
 import { api } from "@/utils/api.js";
 import useCore from "@/stores/core.pinia.js";
 
-const useBlog = defineStore("blog", {
+const useLogin = defineStore("blog", {
   state: () => ({}),
   actions: {
-    getBlogs(data) {
+    postLogin(data, callback) {
       const core = useCore();
       core.loadingUrl.add("telegram/auth/");
       api({
@@ -15,7 +15,8 @@ const useBlog = defineStore("blog", {
       })
         .then(({ data }) => {
           localStorage.setItem("access_token", data.access_token);
-          console.log('data',data)
+          console.log("data", data);
+          callback();
         })
         .catch(() => {})
         .finally(() => {
@@ -25,4 +26,4 @@ const useBlog = defineStore("blog", {
   },
 });
 
-export default useBlog;
+export default useLogin;
