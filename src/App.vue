@@ -20,7 +20,7 @@ const theme = reactive({
 });
 
 onMounted(() => {
-  // profilePinia.getProfile()
+  profilePinia.getProfile();
 });
 </script>
 
