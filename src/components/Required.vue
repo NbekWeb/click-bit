@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import { CloseOutlined } from "@ant-design/icons-vue";
 
 const placement = ref("bottom");
 const open = ref(false);
@@ -10,7 +9,7 @@ const showDrawer = () => {
 const onClose = () => {
   open.value = false;
 };
-defineExpose({ showDrawer })
+defineExpose({ showDrawer });
 </script>
 <template>
   <a-drawer
@@ -23,11 +22,9 @@ defineExpose({ showDrawer })
   >
     <div class="text-white relative">
       <span
-        class="text-base absolute top-0 right-2 opacity-80 hover:cursor-pointer hover:opacity-100"
         @click="onClose"
-      >
-        <CloseOutlined class="" />
-      </span>
+        class="flex hover:cursor-pointer h-1.5 w-16 bg-dark-300 rounded justify-center mx-auto"
+      ></span>
 
       <h2
         class="text-lg !mb-10 pt-6 text-center font-bold uppercase px-5 leading-4"

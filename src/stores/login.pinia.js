@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { api } from "@/utils/api.js";
 import useCore from "@/stores/core.pinia.js";
 
-const useLogin = defineStore("blog", {
+const useLogin = defineStore("login", {
   state: () => ({}),
   actions: {
     postLogin(data, callback) {

@@ -6,11 +6,17 @@ import Spend from "@/pages/Spend.vue";
 import CardOne from "@/pages/CardOne.vue";
 import Refer from "@/pages/Refer.vue";
 import Login from "@/pages/Login.vue";
+import Profile from "@/pages/Profile.vue";
 const routes = [
   {
     path: "/login",
     component: Login,
     name: "Login",
+  },
+  {
+    path: "/profile",
+    component: Profile,
+    name: "Profile",
   },
   {
     path: "/",

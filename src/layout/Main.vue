@@ -1,10 +1,16 @@
 <script setup>
-import { RouterView } from "vue-router";
+import { RouterView, useRouter } from "vue-router";
 import profile from "../components/icons/profile.vue";
 import ton from "../components/icons/ton.vue";
 import send from "../components/icons/send.vue";
 import wallet from "../components/icons/wallet.vue";
 import Navbar from "@/components/Navbar.vue";
+
+const router = useRouter();
+
+const goProfile = () => {
+  router.push({ name: "Profile" });
+};
 </script>
 
 <template>
@@ -14,6 +20,7 @@ import Navbar from "@/components/Navbar.vue";
     </div>
     <div class="h-10 flex items-center gap-3">
       <div
+        @click="goProfile"
         class="bg-dark-200 rounded-full h-full flex items-center justify-center w-10 text-2xl"
       >
         <profile />

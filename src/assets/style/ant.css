@@ -12,3 +12,12 @@
 .ant-drawer .ant-drawer-mask {
   background: #00000099;
 }
+
+.ant-switch.ant-switch-checked,
+.ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+  background: linear-gradient(90deg, #ff4d00 0%, #ffa800 100%);
+}
+
+.ant-switch:focus-visible {
+  outline: 2px solid #ff4d00;
+}
