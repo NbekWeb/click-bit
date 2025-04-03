@@ -20,14 +20,16 @@ const theme = reactive({
 });
 
 onMounted(() => {
-  profilePinia.deleteProfile();
+  if (window.Telegram?.WebApp) {
+    window.Telegram.WebApp.close();
+  }
   // profilePinia.getProfile();
 });
 </script>
 
 <template>
   <ConfigProvider :theme="theme">
-    <div class="bg-dark-100 min-h-screen  text-white">
+    <div class="bg-dark-100 min-h-screen text-white">
       <router-view />
     </div>
   </ConfigProvider>
