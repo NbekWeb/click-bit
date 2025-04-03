@@ -23,6 +23,23 @@ const useProfile = defineStore("profile", {
           core.loadingUrl.delete("profile/");
         });
     },
+    deleteProfile() {
+      const core = useCore();
+      core.loadingUrl.add("profile/");
+      api({
+        url: "profile/",
+        method: "DELETE",
+      })
+        .then(() => {
+          if (window.Telegram?.WebApp) {
+            window.Telegram.WebApp.close();
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          core.loadingUrl.delete("profile/");
+        });
+    },
   },
 });
 
