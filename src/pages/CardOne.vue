@@ -47,7 +47,7 @@ const decrease = () => {
           :key="i"
           @click="changeCurrent(i)"
         >
-          <div class="flex gap-4">
+          <div class="flex gap-4 items-center">
             <span
               class="flex w-3.5 h-3.5 rounded-full"
               :class="current == i ? 'bg-orange-500' : 'bg-white'"

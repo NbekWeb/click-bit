@@ -2,26 +2,26 @@ import { defineStore } from "pinia";
 import { api } from "@/utils/api.js";
 import useCore from "@/stores/core.pinia.js";
 
-const useBlog = defineStore("blog", {
+const useLevel = defineStore("blog", {
   state: () => ({
-    blogs: [],
+    levels: [],
     blog: {},
   }),
   actions: {
-    getBlogs(params) {
+    getLevels() {
       const core = useCore();
-      core.loadingUrl.add("blogs/list/");
+      core.loadingUrl.add("all/levels/");
       api({
-        url: "blogs/list/",
+        url: "all/levels/",
         method: "GET",
-        params,
       })
         .then(({ data }) => {
-          this.blogs = data;
+          console.log(data)
+          this.levels = data;
         })
         .catch(() => {})
         .finally(() => {
-          core.loadingUrl.delete("blogs/list/");
+          core.loadingUrl.delete("all/levels/");
         });
     },
     getBlog(id) {
@@ -42,4 +42,4 @@ const useBlog = defineStore("blog", {
   },
 });
 
-export default useBlog;
+export default useLevel;

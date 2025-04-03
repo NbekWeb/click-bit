@@ -14,6 +14,11 @@ import Required from "@/components/Required.vue";
 const modules = [Navigation];
 const swiperInstance = ref(null);
 const requiredRef = ref(null);
+const swapping = ref(false);
+
+const changeSwap = () => {
+  swapping.value = !swapping.value;
+};
 
 const handleSwapClick = () => {
   requiredRef.value?.showDrawer();
@@ -72,8 +77,8 @@ const slideNext = () => {
       <span class="uppercase text-base font-bold font-nova flex justify-center"
         >swap</span
       >
-      <div class="mt-1 mb-5 flex flex-col gap-6 relative">
-        <div class="flex flex-col gap-1">
+      <div class="mt-1 mb-5 grid grid-cols-1 gap-6 relative">
+        <div class="grid grid-cols-1 gap-1" :class="!swapping && 'order-2'">
           <div class="flex items-center gap-1">
             <span
               class="font-bold font-nova text-min w-6 h-6 flex items-center justify-center btn-orange-rounded"
@@ -84,10 +89,11 @@ const slideNext = () => {
           <div
             class="h-13 rounded-lg bg-dark-100 w-full px-3 flex items-center justify-end"
           >
-            <format-input />
+            <format-input placeholder="1,000" />
           </div>
         </div>
         <div
+          @click="changeSwap"
           class="flex justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-3.5"
         >
           <swap />
@@ -104,7 +110,7 @@ const slideNext = () => {
           <div
             class="h-13 rounded-lg bg-dark-100 w-full px-3 flex items-center justify-end"
           >
-            <format-input />
+            <format-input placeholder="10,000" />
           </div>
         </div>
       </div>

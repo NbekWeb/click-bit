@@ -11,7 +11,7 @@ const useProfile = defineStore("profile", {
       const core = useCore();
       core.loadingUrl.add("profile/");
       api({
-        url: "tasks/daily/",
+        url: "profile/",
         method: "GET",
       })
         .then(({ data }) => {

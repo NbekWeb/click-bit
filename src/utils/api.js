@@ -7,6 +7,7 @@ export const api = ({ url, open = false, ...props }) => {
   let token = localStorage.getItem("access_token")
     ? `${localStorage.getItem("access_token")}`
     : null;
+  console.log(token);
   if (token) token = `Bearer ${token}`;
   if (!open) {
     props.headers = {

@@ -8,7 +8,7 @@ defineProps({
 });
 </script>
 <template>
-  <router-link :to="data?.level">
+  <div>
     <div class="px-3.5">
       <button
         class="flex justify-center bg-dark-200 items-center h-7 w-full btn-orange"
@@ -44,5 +44,5 @@ defineProps({
         </div>
       </div>
     </div>
-  </router-link>
+  </div>
 </template>

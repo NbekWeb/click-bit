@@ -3,6 +3,13 @@ import { LeftOutlined } from "@ant-design/icons-vue";
 import { useRouter } from "vue-router";
 import Profile from "@/components/icons/profile.vue";
 import { ref } from "vue";
+import useProfile from "@/stores/user.pinia";
+import { storeToRefs } from "pinia";
+
+const profilePinia = useProfile();
+
+const { profile } = storeToRefs(profilePinia);
+
 const checked = ref(false);
 
 const router = useRouter();
@@ -39,7 +46,7 @@ function goBack() {
       <Profile />
     </div>
     <h2 class="font-bold text-2xl text-center pt-1 !mb-10">
-      @telegram username
+      @{{ profile?.username || "Not username" }}
     </h2>
     <div class="flex flex-col gap-2 w-full font-semibold text-base">
       <div
