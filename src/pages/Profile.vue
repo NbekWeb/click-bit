@@ -1,5 +1,5 @@
 <script setup>
-import { LeftOutlined } from "@ant-design/icons-vue";
+import { LeftOutlined, CloseOutlined } from "@ant-design/icons-vue";
 import { useRouter } from "vue-router";
 import Profile from "@/components/icons/profile.vue";
 import { ref } from "vue";
@@ -11,6 +11,11 @@ const profilePinia = useProfile();
 const { profile } = storeToRefs(profilePinia);
 
 const checked = ref(false);
+const open = ref(false);
+
+const toggleOpen = () => {
+  open.value = !open.value;
+};
 
 const router = useRouter();
 
@@ -21,6 +26,17 @@ function goBack() {
   } else {
     router.push({ name: "Earn" });
   }
+}
+
+function logOut() {
+  localStorage.removeItem("access_token");
+  if (window.Telegram?.WebApp) {
+    window.Telegram.WebApp.close();
+  }
+}
+
+function deleteAccount() {
+  profilePinia.deleteProfile();
 }
 </script>
 <template>
@@ -76,11 +92,13 @@ function goBack() {
         <a-switch v-model:checked="checked" />
       </div>
       <div
+        @click="toggleOpen"
         class="h-11 bg-dark-200 rounded-xl w-full pl-5 pr-2.5 flex items-center justify-between"
       >
         Terms of Use
       </div>
       <div
+        @click="toggleOpen"
         class="h-11 bg-dark-200 rounded-xl w-full pl-5 pr-2.5 flex items-center justify-between"
       >
         Privacy Policy
@@ -91,10 +109,30 @@ function goBack() {
         Support
       </div>
       <div
+        @click="logOut"
         class="h-11 bg-dark-200 rounded-xl w-full pl-5 pr-2.5 flex items-center justify-between"
       >
         Log Out
       </div>
+      <span
+        @click="deleteAccount"
+        class="my-3 justify-center gap-2 text-sm flex !text-red-500 text-nova"
+      >
+        <CloseOutlined class="text-base !text-red-500" />
+        Delete Account</span
+      >
     </div>
+    <a-modal v-model:open="open">
+      <h3 class="text-base font-semibold pt-6">This page is in progress...</h3>
+
+      <template #footer>
+        <button
+          @click="toggleOpen"
+          class="btn-primary rounded py-1 px-4 font-semibold hover:opacity-80"
+        >
+          Ok
+        </button>
+      </template>
+    </a-modal>
   </div>
 </template>

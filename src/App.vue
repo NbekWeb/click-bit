@@ -20,10 +20,7 @@ const theme = reactive({
 });
 
 onMounted(() => {
-  if (window.Telegram?.WebApp) {
-    window.Telegram.WebApp.close();
-  }
-  // profilePinia.getProfile();
+  profilePinia.getProfile();
 });
 </script>
 

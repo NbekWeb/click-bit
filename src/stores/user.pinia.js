@@ -40,6 +40,7 @@ const useProfile = defineStore("profile", {
           core.loadingUrl.delete("profile/");
         });
     },
+    
   },
 });
 
