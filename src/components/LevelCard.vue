@@ -42,7 +42,8 @@ function buy() {
       <div class="mt-1">
         <div class="relative bg-dark-100 w-full h-1 rounded">
           <div
-            class="flex rounded btn-primary w-5 h-full absolute top-0 left-0"
+            class="flex rounded btn-primary h-full absolute top-0 left-0"
+            :style="`width: calc(${data?.earn_rate || 0} / 100 * 100%)`"
           ></div>
         </div>
         <div class="mt-3 text-xs flex flex-col items-center text-center">
@@ -62,10 +63,16 @@ function buy() {
             >
           </span>
           <button
-            @click="buy"
-            class="btn-primary h-8 rounded-lg w-full hover:opacity-80"
+            @click="!data?.is_active && buy"
+            :class="[
+              'h-8 rounded-lg w-full text-sm font-semibold',
+              data?.is_active
+                ? 'btn-primary flex items-center justify-center opacity-60 cursor-not-allowed'
+                : 'btn-primary hover:opacity-80',
+            ]"
+            :disabled="data?.is_active"
           >
-            <span class="text-sm font-semibold"> Buy </span>
+            {{ data?.is_active ? "Purchased" : "Buy" }}
           </button>
         </div>
       </div>

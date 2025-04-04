@@ -35,6 +35,25 @@ const tasks = [
     count: 10,
   },
 ];
+
+const share = async () => {
+  const shareData = {
+    title: 'ClickBit Invite',
+    text: 'Join ClickBit and earn 100 BITs! 🎉',
+    url: window.location.href, // or use your referral link
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+    } else {
+      alert("Your browser doesn't support sharing.");
+    }
+  } catch (err) {
+    console.error("Sharing failed:", err);
+  }
+};
+
 </script>
 <template>
   <div>
