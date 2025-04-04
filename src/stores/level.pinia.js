@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { api } from "@/utils/api.js";
 import useCore from "@/stores/core.pinia.js";
 
-const useLevel = defineStore("blog", {
+const useLevel = defineStore("level", {
   state: () => ({
     levels: [],
   }),

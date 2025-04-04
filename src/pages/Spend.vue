@@ -1,7 +1,7 @@
 <script setup>
 import { SearchOutlined } from "@ant-design/icons-vue";
 import { RouterLink, useRouter, useRoute } from "vue-router";
-import useBrand from "@/stores/brand.pinia";
+import useBrand from "@/stores/brand.pinia.js";
 import { storeToRefs } from "pinia";
 import { onMounted, ref, watch, computed } from "vue";
 
@@ -31,9 +31,6 @@ watch(
   },
   { immediate: true }
 );
-onMounted(() => {
-  brandPinia.getBrands(search.value);
-});
 </script>
 <template>
   <div>

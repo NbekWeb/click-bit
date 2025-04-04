@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { api } from "@/utils/api.js";
 import useCore from "@/stores/core.pinia.js";
 
-const useTask = defineStore("blog", {
+const useTask = defineStore("task", {
   state: () => ({
     channels: [],
     dailyTasks: [],

@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { api } from "@/utils/api.js";
 import useCore from "@/stores/core.pinia.js";
 
-const useBrand = defineStore("blog", {
+const useBrand = defineStore("brand", {
   state: () => ({
     brands: [],
     brand: {},
