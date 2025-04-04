@@ -1,4 +1,9 @@
 <script setup>
+import useProfile from "@/stores/user.pinia";
+import { storeToRefs } from "pinia";
+import { computed } from "vue";
+import { message } from "ant-design-vue";
+
 import copy from "@/components/icons/copy.vue";
 import Task from "@/components/Task.vue";
 
@@ -7,6 +12,10 @@ import discord from "@/assets/img/discord.svg";
 import x from "@/assets/img/x.svg";
 import yt from "@/assets/img/yt.svg";
 import tiktok from "@/assets/img/tiktok.svg";
+
+const profilePinia = useProfile();
+
+const { profile } = storeToRefs(profilePinia);
 
 const tasks = [
   {
@@ -36,24 +45,35 @@ const tasks = [
   },
 ];
 
+const referall = computed(
+  () =>
+    `https://t.me/ibosh_tehdddbot/salom?startapp=${profile.value.referral_code}`
+);
+
 const share = async () => {
   const shareData = {
-    title: 'ClickBit Invite',
-    text: 'Join ClickBit and earn 100 BITs! 🎉',
-    url: window.location.href, // or use your referral link
+    title: "ClickBit Invite",
+    text: "Join ClickBit and earn 100 BITs! 🎉",
+    url: referall.value,
   };
 
   try {
     if (navigator.share) {
       await navigator.share(shareData);
     } else {
-      alert("Your browser doesn't support sharing.");
+      message.error("Your browser doesn't support sharing.");
     }
-  } catch (err) {
-    console.error("Sharing failed:", err);
-  }
+  } catch (err) {}
 };
 
+const copyReferral = async () => {
+  try {
+    await navigator.clipboard.writeText(referall.value);
+    message.success("Referral link copied to clipboard!");
+  } catch (err) {
+    message.error("Failed to copy referral link.");
+  }
+};
 </script>
 <template>
   <div>
@@ -78,14 +98,15 @@ const share = async () => {
     </div>
     <div class="flex gap-2 items-center text-base mt-3 h-10 mb-5">
       <button
-        class="flex-grow flex items-center justify-center h-full btn-primary rounded-lg"
+        @click="share"
+        class="flex-grow hover:opacity-80 flex items-center justify-center h-full btn-primary rounded-lg"
       >
         <span class="text-sm font-semibold capitalize"> invite friends </span>
       </button>
       <button
-        class="px-4 flex gap-2 items-center justify-center h-full btn-primary rounded-lg"
+        @click="copyReferral"
+        class="px-4 flex gap-2 items-center justify-center h-full btn-primary rounded-lg hover:opacity-80"
       >
-        
         <span class="text-sm font-semibold capitalize"> Copy </span>
         <copy class="text-lg" />
       </button>
