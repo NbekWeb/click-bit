@@ -58,12 +58,19 @@ const share = async () => {
   };
 
   try {
-    if (navigator.share) {
-      await navigator.share(shareData);
+    // Check if the Telegram WebApp is available
+    if (window.Telegram && window.Telegram.WebApp) {
+      // Telegram share link format
+      const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(
+        shareData.url
+      )}&text=${encodeURIComponent(shareData.text)}`;
+      window.open(telegramUrl, "_blank");
     } else {
-      message.error("Your browser doesn't support sharing.");
+      message.error("Your browser doesn't support sharing with Telegram.");
     }
-  } catch (err) {}
+  } catch (err) {
+    message.error("An error occurred while sharing.");
+  }
 };
 
 const copyReferral = async () => {
