@@ -1,5 +1,5 @@
 <script setup>
-import { SearchOutlined } from "@ant-design/icons-vue";
+import { SearchOutlined, CloseOutlined } from "@ant-design/icons-vue";
 import { RouterLink, useRouter, useRoute } from "vue-router";
 import useBrand from "@/stores/brand.pinia.js";
 import { storeToRefs } from "pinia";
@@ -13,6 +13,10 @@ const route = useRoute();
 const brandPinia = useBrand();
 
 const { brands } = storeToRefs(brandPinia);
+
+const clearSearch = () => {
+  search.value = "";
+};
 
 watch(
   search,
@@ -35,15 +39,20 @@ watch(
 <template>
   <div>
     <div
-      class="border custom-search rounded-lg h-10 border-gray-200/20 relative pl-11 pr-3 flex items-center"
+      class="border rounded-lg h-10 border-gray-200/20 relative pl-11 pr-3 flex items-center"
     >
       <SearchOutlined class="text-lg absolute left-3.5" />
-      <a-input
-        v-model:value="search"
+      <input
+        v-model="search"
         type="search"
         allow-clear
         class="text-lg w-full border-none outline-none font-nova"
         placeholder="Search our digital gift cards "
+      />
+      <CloseOutlined
+        v-if="search"
+        @click="clearSearch"
+        class="text-sm !text-white/70 absolute right-2 cursor-pointer"
       />
     </div>
     <div class="mt-4 grid grid-cols-2 gap-2.5">
@@ -55,26 +64,3 @@ watch(
     </div>
   </div>
 </template>
-<style>
-.custom-search .ant-input-affix-wrapper {
-  background: transparent;
-  border: none;
-  padding: 0;
-  border-radius: 0;
-  color: #fff;
-}
-.custom-search .ant-input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-.custom-search .ant-input {
-  background: transparent;
-  color: #fff;
-}
-.custom-search .ant-input-affix-wrapper:focus,
-:where(.css-dev-only-do-not-override-rv9zoc).ant-input-affix-wrapper-focused {
-  box-shadow: none;
-}
-.custom-search .ant-input-affix-wrapper .ant-input-clear-icon {
-  font-size: 16px;
-}
-</style>
