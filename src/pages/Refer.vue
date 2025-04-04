@@ -55,13 +55,14 @@ const share = async () => {
     title: "ClickBit Invite",
     text: "Join ClickBit and earn 100 BITs! 🎉",
     url: referall.value,
+    customText: "Exclusive offer just for you! Click here to start earning!",
   };
 
   try {
     if (window.Telegram && window.Telegram.WebApp) {
       const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(
         shareData.url
-      )}&text=${encodeURIComponent(shareData.text)}`;
+      )}&text=${encodeURIComponent(shareData.customText)}`;
       window.open(telegramUrl, "_blank");
     } else {
       message.error("Your browser doesn't support sharing with Telegram.");
