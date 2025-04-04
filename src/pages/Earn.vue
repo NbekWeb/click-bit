@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -10,11 +10,16 @@ import FormatInput from "@/components/FormatInput.vue";
 import swap from "@/components/icons/swap.vue";
 import send from "@/components/icons/send.vue";
 import Required from "@/components/Required.vue";
+import { storeToRefs } from "pinia";
+import useLevel from "@/stores/level.pinia";
 
 const modules = [Navigation];
 const swiperInstance = ref(null);
 const requiredRef = ref(null);
 const swapping = ref(false);
+
+const levelPinia = useLevel();
+const { levels } = storeToRefs(levelPinia);
 
 const changeSwap = () => {
   swapping.value = !swapping.value;
@@ -35,11 +40,15 @@ const slidePrev = () => {
 const slideNext = () => {
   swiperInstance.value?.slideNext();
 };
+
+onMounted(() => {
+  levelPinia.getLevels();
+});
 </script>
 
 <template>
   <div>
-    <div class="relative">
+    <div class="relative min-h-15">
       <Swiper
         :modules="modules"
         :slides-per-view="1"
@@ -47,8 +56,8 @@ const slideNext = () => {
         :loop="true"
         @swiper="onSwiper"
       >
-        <SwiperSlide v-for="i in 5" :key="i">
-          <level-slide />
+        <SwiperSlide v-for="level in levels" :key="level?.id">
+          <level-slide :data="level" />
         </SwiperSlide>
       </Swiper>
 

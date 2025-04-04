@@ -5,7 +5,6 @@ import useCore from "@/stores/core.pinia.js";
 const useLevel = defineStore("blog", {
   state: () => ({
     levels: [],
-    blog: {},
   }),
   actions: {
     getLevels() {
@@ -16,7 +15,6 @@ const useLevel = defineStore("blog", {
         method: "GET",
       })
         .then(({ data }) => {
-          console.log(data)
           this.levels = data;
         })
         .catch(() => {})
@@ -24,19 +22,18 @@ const useLevel = defineStore("blog", {
           core.loadingUrl.delete("all/levels/");
         });
     },
-    getBlog(id) {
+    buyLevel(data) {
       const core = useCore();
-      core.loadingUrl.add("blogs/list/id");
+      core.loadingUrl.add("buy/level/");
       api({
-        url: `blogs/list/${id}/`,
-        method: "GET",
+        url: "buy/level/",
+        method: "POST",
+        data,
       })
-        .then(({ data }) => {
-          this.directory = data;
-        })
+        .then(() => {})
         .catch(() => {})
         .finally(() => {
-          core.loadingUrl.delete("blogs/list/id");
+          core.loadingUrl.delete("buy/level/");
         });
     },
   },

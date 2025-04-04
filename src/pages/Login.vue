@@ -12,7 +12,7 @@ onMounted(() => {
 
   // localStorage.setItem(
   //   "access_token",
-  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzNTA4NDgxLCJpYXQiOjE3NDM1MDgxODEsImp0aSI6ImJlZThiYWQwZTYzNDQ0NmFhNTE5YzUyMmIwNTU4M2VmIiwidXNlcl9pZCI6MjZ9.APHj-js7Y0pqS9X5Girs7iIA_bcPHhA2Wnq4hBVeV04"
+  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ0MjgyMzcwLCJpYXQiOjE3NDM2Nzc1NzAsImp0aSI6ImRhMzFiZmU5YTg1OTRkZmM5ZWY4M2IwZjQwMjI5Y2NkIiwidXNlcl9pZCI6MjZ9.RynVslyaWI8u5h34GjsZfdSlic0RssTvSfaQ8hUR7e0"
   // );
   // router.push({ name: "Earn" });
   loginPinia.postLogin({ initData }, () => {

@@ -8,16 +8,16 @@ const useBrand = defineStore("blog", {
     brand: {},
   }),
   actions: {
-    getBrands() {
+    getBrands(search = "") {
       const core = useCore();
       core.loadingUrl.add("brands/");
       api({
         url: "brands/",
         method: "GET",
+        params: { search },
       })
         .then(({ data }) => {
-          console.log(data);
-          this.levels = data;
+          this.brands = data;
         })
         .catch(() => {})
         .finally(() => {
@@ -32,7 +32,7 @@ const useBrand = defineStore("blog", {
         method: "GET",
       })
         .then(({ data }) => {
-          this.directory = data;
+          this.brand = data;
         })
         .catch(() => {})
         .finally(() => {

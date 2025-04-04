@@ -5,19 +5,33 @@ import Profile from "@/components/icons/profile.vue";
 import { ref } from "vue";
 import useProfile from "@/stores/user.pinia";
 import { storeToRefs } from "pinia";
+import { watch } from "vue";
 
 const profilePinia = useProfile();
 
 const { profile } = storeToRefs(profilePinia);
 
 const checked = ref(false);
+const notification = ref(true);
 const open = ref(false);
+
+function formatNumberWithDot(number) {
+  return number.toLocaleString("de-DE");
+}
 
 const toggleOpen = () => {
   open.value = !open.value;
 };
 
 const router = useRouter();
+
+watch(
+  () => profile.value.send_notification,
+  (newValue) => {
+    notification.value = newValue;
+  },
+  { immediate: true }
+);
 
 function goBack() {
   if (!!window.history?.state?.back) {
@@ -69,7 +83,9 @@ function deleteAccount() {
         class="h-11 bg-dark-200 rounded-xl w-full pl-5 pr-2.5 flex items-center justify-between"
       >
         Total BITs earned
-        <span class="flex h-6.5 items-center px-4 btn-orange"> 1.000.000 </span>
+        <span class="flex h-6.5 items-center px-4 btn-orange">
+          {{ formatNumberWithDot(profile?.user_level?.[0]?.bit_balance) }}
+        </span>
       </div>
       <div
         class="h-11 bg-dark-200 rounded-xl w-full pl-5 pr-2.5 flex items-center justify-between"
@@ -82,14 +98,14 @@ function deleteAccount() {
       <div
         class="h-11 bg-dark-200 rounded-xl w-full pl-5 pr-2.5 flex items-center justify-between"
       >
-        Language
+        Sound
         <a-switch v-model:checked="checked" />
       </div>
       <div
         class="h-11 bg-dark-200 rounded-xl w-full pl-5 pr-2.5 flex items-center justify-between"
       >
         Push Notifications
-        <a-switch v-model:checked="checked" />
+        <a-switch v-model:checked="notification" />
       </div>
       <div
         @click="toggleOpen"
