@@ -40,7 +40,7 @@ onMounted(() => {
       placement="bottom"
       :open="open"
       @close="openDrawer"
-      >sa
+    >
       <Buying />
     </a-drawer>
   </div>

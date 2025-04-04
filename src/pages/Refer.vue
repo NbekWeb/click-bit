@@ -58,9 +58,7 @@ const share = async () => {
   };
 
   try {
-    // Check if the Telegram WebApp is available
     if (window.Telegram && window.Telegram.WebApp) {
-      // Telegram share link format
       const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(
         shareData.url
       )}&text=${encodeURIComponent(shareData.text)}`;
