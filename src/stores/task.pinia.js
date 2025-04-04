@@ -17,7 +17,6 @@ const useTask = defineStore("task", {
         method: "GET",
       })
         .then(({ data }) => {
-          console.log(data);
           this.channels = data;
         })
         .catch(() => {})
@@ -33,7 +32,6 @@ const useTask = defineStore("task", {
         method: "GET",
       })
         .then(({ data }) => {
-          console.log(data);
           this.dailyTasks = data;
         })
         .catch(() => {})

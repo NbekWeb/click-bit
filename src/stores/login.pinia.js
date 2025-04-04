@@ -15,7 +15,7 @@ const useLogin = defineStore("login", {
       })
         .then(({ data }) => {
           localStorage.setItem("access_token", data.access_token);
-          console.log("data", data);
+         
           callback();
         })
         .catch(() => {})

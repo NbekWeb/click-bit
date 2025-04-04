@@ -80,3 +80,8 @@ a:hover {
 .anticon {
   color: #fff;
 }
+
+.ant-message-notice .ant-message-notice-content{
+  background: #262323;
+  color: #fff;
+}

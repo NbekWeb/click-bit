@@ -36,10 +36,21 @@ watch(
 function goBack() {
   if (!!window.history?.state?.back) {
     router.push(window.history.state.back);
-    console.log(window.history?.state?.back);
   } else {
     router.push({ name: "Earn" });
   }
+}
+
+function changeNotification(checked) {
+  profilePinia.changeNotification({ send_notification: checked }, () => {
+    profilePinia.getProfile();
+  });
+}
+
+function changeSound(checked) {
+  profilePinia.changeSound({ send_notification: checked }, () => {
+    profilePinia.getProfile();
+  });
 }
 
 function logOut() {
@@ -95,17 +106,17 @@ function deleteAccount() {
           >en
         </span>
       </div>
-      <div
+      <!-- <div
         class="h-11 bg-dark-200 rounded-xl w-full pl-5 pr-2.5 flex items-center justify-between"
       >
         Sound
-        <a-switch v-model:checked="checked" />
-      </div>
+        <a-switch v-model:checked="checked" @change="changeSound" />
+      </div> -->
       <div
         class="h-11 bg-dark-200 rounded-xl w-full pl-5 pr-2.5 flex items-center justify-between"
       >
         Push Notifications
-        <a-switch v-model:checked="notification" />
+        <a-switch v-model:checked="notification" @change="changeNotification" />
       </div>
       <div
         @click="toggleOpen"

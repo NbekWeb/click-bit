@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -12,21 +12,48 @@ import send from "@/components/icons/send.vue";
 import Required from "@/components/Required.vue";
 import { storeToRefs } from "pinia";
 import useLevel from "@/stores/level.pinia";
+import useVideo from "@/stores/video.pinia";
+import useProfile from "@/stores/user.pinia";
 
 const modules = [Navigation];
 const swiperInstance = ref(null);
 const requiredRef = ref(null);
 const swapping = ref(false);
+const bit = ref(0);
+const click = ref(0);
 
 const levelPinia = useLevel();
+const videoPinia = useVideo();
+const profilePinia = useProfile();
+
 const { levels } = storeToRefs(levelPinia);
+const { rate } = storeToRefs(profilePinia);
+
+watch(
+  bit,
+  (val) => {
+    click.value = val / rate.value;
+  },
+  { immediate: true }
+);
+
+watch(
+  click,
+  (val) => {
+    bit.value = val * rate.value;
+  },
+  { immediate: true }
+);
 
 const changeSwap = () => {
   swapping.value = !swapping.value;
+  bit.value = 0;
+  click.value = 0;
 };
 
 const handleSwapClick = () => {
-  requiredRef.value?.showDrawer();
+  // requiredRef.value?.showDrawer();
+  profilePinia.postSwap({ type: "bit", amount: 10 });
 };
 
 const onSwiper = (swiper) => {
@@ -43,6 +70,8 @@ const slideNext = () => {
 
 onMounted(() => {
   levelPinia.getLevels();
+  videoPinia.getVideo();
+  profilePinia.getCurrency();
 });
 </script>
 
@@ -84,10 +113,10 @@ onMounted(() => {
     </div>
     <div class="mt-3 rounded-3xl bg-dark-200 px-4 py-3">
       <span class="uppercase text-base font-bold font-nova flex justify-center"
-        >swap</span
-      >
+        >swap
+      </span>
       <div class="mt-1 mb-5 grid grid-cols-1 gap-6 relative">
-        <div class="grid grid-cols-1 gap-1" :class="!swapping && 'order-2'">
+        <div class="grid grid-cols-1 gap-1" :class="!!swapping && 'order-2'">
           <div class="flex items-center gap-1">
             <span
               class="font-bold font-nova text-min w-6 h-6 flex items-center justify-center btn-orange-rounded"
@@ -98,7 +127,11 @@ onMounted(() => {
           <div
             class="h-13 rounded-lg bg-dark-100 w-full px-3 flex items-center justify-end"
           >
-            <format-input placeholder="1,000" />
+            <format-input
+              :readonly="!!swapping"
+              placeholder="1,000"
+              v-model="bit"
+            />
           </div>
         </div>
         <div
@@ -119,7 +152,11 @@ onMounted(() => {
           <div
             class="h-13 rounded-lg bg-dark-100 w-full px-3 flex items-center justify-end"
           >
-            <format-input placeholder="10,000" />
+            <format-input
+              :readonly="!swapping"
+              placeholder="10,000"
+              v-model="click"
+            />
           </div>
         </div>
       </div>

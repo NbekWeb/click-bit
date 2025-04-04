@@ -3,6 +3,7 @@ import { RouterLink } from "vue-router";
 import useLevel from "@/stores/level.pinia";
 import useProfile from "@/stores/user.pinia";
 import { storeToRefs } from "pinia";
+import { message } from "ant-design-vue";
 
 const levelPinia = useLevel();
 const profilePinia = useProfile();
@@ -21,7 +22,12 @@ function formatNumberWithDot(number) {
 }
 
 function buy() {
-  levelPinia.buyLevel({ level_number: props.data.number });
+  if (!props.data?.is_active) {
+    levelPinia.buyLevel({ level_number: props.data.number }, () => {
+      levelPinia.getLevels();
+      profilePinia.getProfile()
+    });
+  }
 }
 </script>
 <template>
@@ -63,7 +69,7 @@ function buy() {
             >
           </span>
           <button
-            @click="!data?.is_active && buy"
+            @click="buy"
             :class="[
               'h-8 rounded-lg w-full text-sm font-semibold',
               data?.is_active
