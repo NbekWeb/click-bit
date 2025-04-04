@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
 import { api } from "@/utils/api.js";
 import useCore from "@/stores/core.pinia.js";
+import { message } from "ant-design-vue";
 
 const useProfile = defineStore("profile", {
   state: () => ({
     profile: {},
-    rate: 1,
+    rate: {},
     sound: {},
   }),
   actions: {
@@ -49,11 +50,7 @@ const useProfile = defineStore("profile", {
         method: "GET",
       })
         .then(({ data }) => {
-          const { click_to_bit_ratio, bit_to_click_ratio } = data?.[0];
-          this.rate =
-            click_to_bit_ratio === 0 || bit_to_click_ratio === 0
-              ? 1
-              : click_to_bit_ratio / bit_to_click_ratio;
+          this.rate = data?.[0];
 
           callback();
         })
@@ -106,7 +103,9 @@ const useProfile = defineStore("profile", {
         .then(() => {
           callback();
         })
-        .catch(() => {})
+        .catch((error) => {
+          message.error(error?.response?.data?.error);
+        })
         .finally(() => {
           core.loadingUrl.delete("profile/sound/");
         });

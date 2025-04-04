@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -14,6 +14,7 @@ import { storeToRefs } from "pinia";
 import useLevel from "@/stores/level.pinia";
 import useVideo from "@/stores/video.pinia";
 import useProfile from "@/stores/user.pinia";
+import { message } from "ant-design-vue";
 
 const modules = [Navigation];
 const swiperInstance = ref(null);
@@ -27,12 +28,14 @@ const videoPinia = useVideo();
 const profilePinia = useProfile();
 
 const { levels } = storeToRefs(levelPinia);
-const { rate } = storeToRefs(profilePinia);
+const { rate, profile } = storeToRefs(profilePinia);
 
 watch(
   bit,
   (val) => {
-    click.value = val / rate.value;
+    click.value =
+      val /
+      (rate.value?.bit_to_click_ratio > 0 ? rate.value?.bit_to_click_ratio : 1);
   },
   { immediate: true }
 );
@@ -40,7 +43,7 @@ watch(
 watch(
   click,
   (val) => {
-    bit.value = val * rate.value;
+    bit.value = val * rate.value.click_to_bit_ratio;
   },
   { immediate: true }
 );
@@ -49,11 +52,6 @@ const changeSwap = () => {
   swapping.value = !swapping.value;
   bit.value = 0;
   click.value = 0;
-};
-
-const handleSwapClick = () => {
-  // requiredRef.value?.showDrawer();
-  profilePinia.postSwap({ type: "bit", amount: 10 });
 };
 
 const onSwiper = (swiper) => {
@@ -66,6 +64,41 @@ const slidePrev = () => {
 
 const slideNext = () => {
   swiperInstance.value?.slideNext();
+};
+
+const bitBalance = computed(
+  () => profile.value?.user_level?.[0]?.bit_balance || 0
+);
+const clickBalance = computed(
+  () => profile.value?.user_level?.[0]?.click_balance || 0
+);
+
+const handleSwapClick = () => {
+  if (
+    !(
+      (!swapping.value && bit.value > bitBalance.value) ||
+      (!!swapping.value && click.value > clickBalance.value)
+    )
+  ) {
+    if (bit.value == 0 && !swapping.value) {
+      message.error("Please enter the amount of Bit to swap.");
+    } else if (click.value == 0 && !!swapping.value) {
+      message.error("Please enter the amount of Click to swap.");
+    } else {
+      profilePinia.postSwap(
+        {
+          type: !swapping.value ? "bit" : "click",
+          amount: !swapping.value ? bit.value : click.value,
+        },
+        () => {
+          bit.value = 0;
+          click.value = 0;
+          message.success("Swap successful!");
+          profilePinia.getProfile();
+        }
+      );
+    }
+  }
 };
 
 onMounted(() => {
@@ -114,6 +147,12 @@ onMounted(() => {
     <div class="mt-3 rounded-3xl bg-dark-200 px-4 py-3">
       <span class="uppercase text-base font-bold font-nova flex justify-center"
         >swap
+        {{
+          !(
+            (!swapping && bit > bitBalance) ||
+            (!!swapping && click > clickBalance)
+          )
+        }}
       </span>
       <div class="mt-1 mb-5 grid grid-cols-1 gap-6 relative">
         <div class="grid grid-cols-1 gap-1" :class="!!swapping && 'order-2'">
@@ -122,12 +161,14 @@ onMounted(() => {
               class="font-bold font-nova text-min w-6 h-6 flex items-center justify-center btn-orange-rounded"
               >BIT</span
             >
+
             <span class=""> BIT </span>
           </div>
           <div
             class="h-13 rounded-lg bg-dark-100 w-full px-3 flex items-center justify-end"
           >
             <format-input
+              :class="!swapping && bit > bitBalance && '!text-red-500'"
               :readonly="!!swapping"
               placeholder="1,000"
               v-model="bit"
@@ -154,6 +195,7 @@ onMounted(() => {
           >
             <format-input
               :readonly="!swapping"
+              :class="!!swapping && click > clickBalance && '!text-red-500'"
               placeholder="10,000"
               v-model="click"
             />
@@ -163,8 +205,19 @@ onMounted(() => {
       <button
         @click="handleSwapClick"
         class="font-nova font-bold h-12 flex w-full justify-center items-center btn-orange"
+        :class="
+          ((!swapping && bit > bitBalance) ||
+            (!!swapping && click > clickBalance)) &&
+          'opacity-70 cursor-not-allowed'
+        "
       >
-        SWAP
+        {{
+          !swapping && bit > bitBalance
+            ? "Insufficient Bits"
+            : !!swapping && click > clickBalance
+            ? "Insufficient Clicks"
+            : "SWAP"
+        }}
       </button>
     </div>
     <div class="mt-4">
