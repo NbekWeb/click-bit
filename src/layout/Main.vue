@@ -20,6 +20,15 @@ const number = 1000000;
 const goProfile = () => {
   router.push({ name: "Profile" });
 };
+function formatNumber(num) {
+  if (num >= 1_000_000) {
+    return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+  }
+  if (num >= 1_000) {
+    return (num / 1_000).toFixed(1).replace(/\.0$/, "") + "k";
+  }
+  return num;
+}
 </script>
 
 <template>
@@ -48,7 +57,7 @@ const goProfile = () => {
           @click="goProfile"
           v-else
           :src="profile?.avatar_url"
-          class="w-full h-full rounded-full"
+          class="w-10 h-full rounded-full"
         />
         <div
           class="flex items-center gap-3 flex-grow h-full bg-dark-200 rounded-xl px-2"
@@ -63,9 +72,7 @@ const goProfile = () => {
                 BIT
               </span>
               <span class="">
-                {{
-                  profile?.user_level?.[0]?.bit_balance?.toLocaleString()
-                }}</span
+                {{ formatNumber(profile?.user_level?.[0]?.bit_balance) }}</span
               >
             </div>
             <div class="flex items-center gap-1">
@@ -75,7 +82,7 @@ const goProfile = () => {
                 <send class="text-sm" />
               </span>
               <span class="">
-                {{ profile?.user_level?.[0]?.click_balance?.toLocaleString() }}
+                {{ formatNumber(profile?.user_level?.[0]?.click_balance) }}
               </span>
             </div>
             <div class="flex items-center gap-1">
@@ -85,9 +92,7 @@ const goProfile = () => {
                 <ton class="text-xl" />
               </span>
               <span class="">
-                {{
-                  profile?.user_level?.[0]?.ton_balance?.toLocaleString()
-                }}</span
+                {{ formatNumber(profile?.user_level?.[0]?.ton_balance) }}</span
               >
             </div>
           </div>

@@ -101,6 +101,10 @@ const handleSwapClick = () => {
   }
 };
 
+const openAdd = () => {
+  requiredRef.value?.showDrawer();
+};
+
 onMounted(() => {
   levelPinia.getLevels();
   videoPinia.getVideo();
@@ -147,12 +151,6 @@ onMounted(() => {
     <div class="mt-3 rounded-3xl bg-dark-200 px-4 py-3">
       <span class="uppercase text-base font-bold font-nova flex justify-center"
         >swap
-        {{
-          !(
-            (!swapping && bit > bitBalance) ||
-            (!!swapping && click > clickBalance)
-          )
-        }}
       </span>
       <div class="mt-1 mb-5 grid grid-cols-1 gap-6 relative">
         <div class="grid grid-cols-1 gap-1" :class="!!swapping && 'order-2'">
@@ -222,6 +220,7 @@ onMounted(() => {
     </div>
     <div class="mt-4">
       <button
+        @click="openAdd"
         class="btn-primary w-full text-base font-semibold hover:opacity-80 font-nova h-15 rounded-xl flex items-center justify-center"
       >
         CLICK TO EARN

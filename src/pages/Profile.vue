@@ -1,7 +1,7 @@
 <script setup>
 import { LeftOutlined, CloseOutlined } from "@ant-design/icons-vue";
 import { useRouter } from "vue-router";
-import Profile from "@/components/icons/profile.vue";
+import ProfileIcon from "@/components/icons/profile.vue";
 import { ref } from "vue";
 import useProfile from "@/stores/user.pinia";
 import { storeToRefs } from "pinia";
@@ -82,10 +82,16 @@ function deleteAccount() {
       </router-link>
     </div>
     <div
+      v-if="!profile?.avatar_url"
       class="bg-dark-200 rounded-full h-17 flex items-center justify-center w-17 text-3xl mx-auto"
     >
-      <Profile />
+      <ProfileIcon />
     </div>
+    <img
+      v-else
+      :src="profile?.avatar_url"
+      class="w-10 h-full rounded-full flex items-center justify-center mx-auto"
+    />
     <h2 class="font-bold text-2xl text-center pt-1 !mb-10">
       @{{ profile?.username || "Not username" }}
     </h2>
