@@ -168,7 +168,7 @@ onMounted(() => {
             <format-input
               :class="!swapping && bit > bitBalance && '!text-red-500'"
               :readonly="!!swapping"
-              placeholder="1,000"
+              placeholder="10,000"
               v-model="bit"
             />
           </div>
@@ -194,7 +194,7 @@ onMounted(() => {
             <format-input
               :readonly="!swapping"
               :class="!!swapping && click > clickBalance && '!text-red-500'"
-              placeholder="10,000"
+              placeholder="1,000"
               v-model="click"
             />
           </div>
