@@ -17,7 +17,7 @@ onMounted(() => {
   // router.push({ name: "Earn" });
   loginPinia.postLogin({ initData }, () => {
     router.push({ name: "Earn" });
-    profilePinia.getProfile();
+    
   });
 });
 </script>

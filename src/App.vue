@@ -1,6 +1,6 @@
 <script setup>
 import { RouterView } from "vue-router";
-import { reactive, onMounted, ref } from "vue";
+import { reactive, ref } from "vue";
 import { ConfigProvider } from "ant-design-vue";
 import useProfile from "@/stores/user.pinia";
 import { storeToRefs } from "pinia";
@@ -33,12 +33,6 @@ const open = ref(false);
 //     console.warn("Audio play failed:", err);
 //   });
 // };
-
-onMounted(() => {
-  profilePinia.getProfile();
-  profilePinia.getCurrency();
-  // profilePinia.getSounds();
-});
 </script>
 
 <template>

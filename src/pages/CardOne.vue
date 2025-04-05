@@ -1,5 +1,12 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import useBrand from "@/stores/brand.pinia";
+import { useRoute } from "vue-router";
+
+const brandPinia = useBrand();
+const route = useRoute();
+const { brand } = storeToRefs(brandPinia);
 
 const count = ref(1);
 const current = ref(2);
@@ -18,6 +25,10 @@ const decrease = () => {
     return count.value++;
   }
 };
+
+onMounted(() => {
+  brandPinia.getBrand(route.params.id);
+});
 </script>
 <template>
   <div>
@@ -35,7 +46,9 @@ const decrease = () => {
             class="bg-dark-200 h-full flex items-center gap-2.5 px-4 rounded-lg text-base"
           >
             <span class="hover:cursor-pointer" @click="increase">-</span>
-            <span class="flex min-w-5 justify-center font-semibold">{{ count }}</span>
+            <span class="flex min-w-5 justify-center font-semibold">{{
+              count
+            }}</span>
             <span class="hover:cursor-pointer" @click="decrease">+</span>
           </div>
         </div>

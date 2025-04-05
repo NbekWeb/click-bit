@@ -26,7 +26,7 @@ const useBrand = defineStore("brand", {
     },
     getBrand(id) {
       const core = useCore();
-      core.loadingUrl.add("brand/");
+      core.loadingUrl.add("brands/");
       api({
         url: `brand/${id}/`,
         method: "GET",
@@ -36,7 +36,7 @@ const useBrand = defineStore("brand", {
         })
         .catch(() => {})
         .finally(() => {
-          core.loadingUrl.delete("brand/");
+          core.loadingUrl.delete("brands/");
         });
     },
   },

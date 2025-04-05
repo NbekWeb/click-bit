@@ -54,6 +54,21 @@ const useTask = defineStore("task", {
           core.loadingUrl.delete("brand/");
         });
     },
+    checkTask(platform, id) {
+      const core = useCore();
+      core.loadingUrl.add("complete/task/");
+      api({
+        url: `complete/task/${platform}/${id}/`,
+        method: "GET",
+      })
+        .then(({ data }) => {
+          // this.directory = data;
+        })
+        .catch(() => {})
+        .finally(() => {
+          core.loadingUrl.delete("complete/task/");
+        });
+    },
   },
 });
 

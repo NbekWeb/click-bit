@@ -1,5 +1,6 @@
 <script setup>
-import { RouterView, useRouter } from "vue-router";
+import { onMounted } from "vue";
+import { RouterView, useRouter, useRoute } from "vue-router";
 import profileIcon from "../components/icons/profile.vue";
 import ton from "../components/icons/ton.vue";
 import send from "../components/icons/send.vue";
@@ -7,15 +8,20 @@ import wallet from "../components/icons/wallet.vue";
 import Navbar from "@/components/Navbar.vue";
 import useCore from "@/stores/core.pinia";
 import useProfile from "@/stores/user.pinia";
+import useLevel from "@/stores/level.pinia";
+import useBrand from "@/stores/brand.pinia.js";
 import { storeToRefs } from "pinia";
 
 const profilePinia = useProfile();
 const corePinia = useCore();
+const levelPinia = useLevel();
+const brandPinia = useBrand();
+
+const route = useRoute();
+const router = useRouter();
 
 const { profile } = storeToRefs(profilePinia);
 const { loadingUrl } = storeToRefs(corePinia);
-const router = useRouter();
-const number = 1000000;
 
 const goProfile = () => {
   router.push({ name: "Profile" });
@@ -29,6 +35,13 @@ function formatNumber(num) {
   }
   return num;
 }
+
+onMounted(() => {
+  profilePinia.getProfile();
+  profilePinia.getCurrency();
+  profilePinia.getReferalAmount();
+  levelPinia.getLevels();
+});
 </script>
 
 <template>

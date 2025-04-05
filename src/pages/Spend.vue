@@ -5,12 +5,12 @@ import useBrand from "@/stores/brand.pinia.js";
 import { storeToRefs } from "pinia";
 import { onMounted, ref, watch, computed } from "vue";
 
-const search = ref("");
-const debounceTimer = ref(null);
-
 const router = useRouter();
 const route = useRoute();
 const brandPinia = useBrand();
+
+const search = ref(route.query.search);
+const debounceTimer = ref(null);
 
 const { brands } = storeToRefs(brandPinia);
 
@@ -22,16 +22,20 @@ watch(
   search,
   (val) => {
     if (debounceTimer.value) clearTimeout(debounceTimer.value);
-    debounceTimer.value = setTimeout(() => {
-      router.push({
-        path: route.path,
-        query: {
-          ...route.query,
-          search: val || undefined,
-        },
-      });
-      brandPinia.getBrands(val);
-    }, 300);
+    debounceTimer.value = setTimeout(
+      () => {
+        router.push({
+          path: route.path,
+          query: {
+            ...route.query,
+            search: val || undefined,
+          },
+        });
+        brandPinia.getBrands(val);
+      },
+
+      300
+    );
   },
   { immediate: true }
 );

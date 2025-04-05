@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import useVideo from "@/stores/video.pinia";
 import useCore from "@/stores/core.pinia";
 import useProfile from "@/stores/user.pinia";

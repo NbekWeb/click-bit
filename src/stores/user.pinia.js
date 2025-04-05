@@ -8,6 +8,7 @@ const useProfile = defineStore("profile", {
     profile: {},
     rate: {},
     sound: {},
+    bonus: 0,
   }),
   actions: {
     getProfile(callback = () => {}) {
@@ -57,6 +58,21 @@ const useProfile = defineStore("profile", {
         .catch(() => {})
         .finally(() => {
           core.loadingUrl.delete("currency/rate/");
+        });
+    },
+    getReferalAmount() {
+      const core = useCore();
+      core.loadingUrl.add("referral/bonus/");
+      api({
+        url: "referral/bonus/",
+        method: "GET",
+      })
+        .then(({ data }) => {
+          this.bonus = data?.[0]?.bonus_bit_amount;
+        })
+        .catch(() => {})
+        .finally(() => {
+          core.loadingUrl.delete("referral/bonus/");
         });
     },
     changeNotification(data, callback = () => {}) {

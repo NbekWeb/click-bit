@@ -3,7 +3,7 @@ import LevelCard from "@/components/LevelCard.vue";
 import Buying from "@/components/Buying.vue";
 import useLevel from "@/stores/level.pinia";
 import { storeToRefs } from "pinia";
-import { reactive, onMounted, ref } from "vue";
+import { reactive, ref } from "vue";
 import { Empty } from "ant-design-vue";
 
 const simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
@@ -18,9 +18,7 @@ const openDrawer = () => {
   open.value = !open.value;
 };
 
-onMounted(() => {
-  levelPinia.getLevels();
-});
+
 </script>
 <template>
   <div>

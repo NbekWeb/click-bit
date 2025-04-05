@@ -1,8 +1,11 @@
 <script setup>
 import useProfile from "@/stores/user.pinia";
+import useTask from "@/stores/task.pinia";
+import Friend from "@/components/Friend.vue";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { message } from "ant-design-vue";
+import { onMounted } from "vue";
 
 import copy from "@/components/icons/copy.vue";
 import Task from "@/components/Task.vue";
@@ -14,9 +17,10 @@ import yt from "@/assets/img/yt.svg";
 import tiktok from "@/assets/img/tiktok.svg";
 
 const profilePinia = useProfile();
+const taskPinia = useTask();
 
-const { profile } = storeToRefs(profilePinia);
-
+const { profile, bonus } = storeToRefs(profilePinia);
+const { dailyTasks } = storeToRefs(taskPinia);
 const tasks = [
   {
     icon: tg,
@@ -80,6 +84,11 @@ const copyReferral = async () => {
     message.error("Failed to copy referral link.");
   }
 };
+
+onMounted(() => {
+  taskPinia.getTasksDaily();
+  // taskPinia.checkTask('YouTube',123);
+});
 </script>
 <template>
   <div>
@@ -97,8 +106,8 @@ const copyReferral = async () => {
       <div class="flex flex-col gap-0">
         <span class="text-base font-semibold"> Invite a friend </span>
         <p class="text-xs !mb-0">
-          <span class="text-primary">+100 BITs</span> For every referral you
-          make
+          <span class="text-primary">+{{ bonus }} BITs</span> For every referral
+          you make
         </p>
       </div>
     </div>
@@ -121,6 +130,12 @@ const copyReferral = async () => {
       <h3 class="font-nova !font-semibold !mb-3 text-2xl">Daily Tasks 5</h3>
       <div class="flex flex-col gap-3">
         <Task v-for="(task, i) of tasks" :key="i" :data="task" />
+      </div>
+      <h3 class="font-nova !font-semibold !my-3 text-2xl">
+        List of Friends (20)
+      </h3>
+      <div class="flex flex-col gap-3">
+        <Friend v-for="(task, i) of tasks" :key="i" :data="task" />
       </div>
     </div>
   </div>
