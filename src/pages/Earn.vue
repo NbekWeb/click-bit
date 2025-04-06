@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, watch, computed } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -104,12 +104,6 @@ const handleSwapClick = () => {
 const openAdd = () => {
   requiredRef.value?.showDrawer();
 };
-
-onMounted(() => {
-  levelPinia.getLevels();
-  videoPinia.getVideo();
-  profilePinia.getCurrency();
-});
 </script>
 
 <template>

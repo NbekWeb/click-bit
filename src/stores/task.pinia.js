@@ -6,6 +6,7 @@ const useTask = defineStore("task", {
   state: () => ({
     channels: [],
     dailyTasks: [],
+    friends: [],
     brand: {},
   }),
   actions: {
@@ -24,7 +25,7 @@ const useTask = defineStore("task", {
           core.loadingUrl.delete("get/channels/");
         });
     },
-    getTasksDaily() {
+    getTasksDaily(callback = () => {}) {
       const core = useCore();
       core.loadingUrl.add("tasks/daily/");
       api({
@@ -33,10 +34,27 @@ const useTask = defineStore("task", {
       })
         .then(({ data }) => {
           this.dailyTasks = data;
+          callback(data);
         })
         .catch(() => {})
         .finally(() => {
           core.loadingUrl.delete("tasks/daily/");
+        });
+    },
+    getFriends(callback = () => {}) {
+      const core = useCore();
+      core.loadingUrl.add("profile/referral/user/");
+      api({
+        url: "profile/referral/user/",
+        method: "GET",
+      })
+        .then(({ data }) => {
+          this.friends = data?.referrals;
+          callback();
+        })
+        .catch(() => {})
+        .finally(() => {
+          core.loadingUrl.delete("profile/referral/user/");
         });
     },
     getBrand(id) {

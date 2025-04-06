@@ -10,12 +10,14 @@ import useCore from "@/stores/core.pinia";
 import useProfile from "@/stores/user.pinia";
 import useLevel from "@/stores/level.pinia";
 import useBrand from "@/stores/brand.pinia.js";
+import useVideo from "@/stores/video.pinia";
 import { storeToRefs } from "pinia";
 
 const profilePinia = useProfile();
 const corePinia = useCore();
 const levelPinia = useLevel();
 const brandPinia = useBrand();
+const videoPinia = useVideo();
 
 const route = useRoute();
 const router = useRouter();
@@ -41,6 +43,8 @@ onMounted(() => {
   profilePinia.getCurrency();
   profilePinia.getReferalAmount();
   levelPinia.getLevels();
+  videoPinia.getVideo();
+  profilePinia.getCurrency();
 });
 </script>
 
@@ -51,6 +55,7 @@ onMounted(() => {
       loadingUrl.has('brands/') ||
       loadingUrl.has('brand/') ||
       loadingUrl.has('buy/level/') ||
+      loadingUrl.has('tasks/daily/') ||
       loadingUrl.has('all/levels/')
     "
   >

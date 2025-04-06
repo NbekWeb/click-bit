@@ -5,7 +5,7 @@ import Friend from "@/components/Friend.vue";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { message } from "ant-design-vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 
 import copy from "@/components/icons/copy.vue";
 import Task from "@/components/Task.vue";
@@ -20,34 +20,8 @@ const profilePinia = useProfile();
 const taskPinia = useTask();
 
 const { profile, bonus } = storeToRefs(profilePinia);
-const { dailyTasks } = storeToRefs(taskPinia);
-const tasks = [
-  {
-    icon: tg,
-    title: "Join ClickBit Channel",
-    count: 10,
-  },
-  {
-    icon: discord,
-    title: "Join ClickBit Server",
-    count: 10,
-  },
-  {
-    icon: x,
-    title: "Follow us on X",
-    count: 10,
-  },
-  {
-    icon: yt,
-    title: "Subscribe to our Youtube",
-    count: 10,
-  },
-  {
-    icon: tiktok,
-    title: "Follow us on TikTok",
-    count: 10,
-  },
-];
+const { dailyTasks,friends } = storeToRefs(taskPinia);
+const tasks = ref([]);
 
 const referall = computed(
   () =>
@@ -57,7 +31,7 @@ const referall = computed(
 const share = async () => {
   const shareData = {
     title: "ClickBit Invite",
-    text: "Join ClickBit and earn 100 BITs! 🎉",
+    text: `Join ClickBit and earn ${bonus.value} BITs! 🎉`,
     url: referall.value,
     customText: "Exclusive offer just for you! Click here to start earning!",
   };
@@ -86,8 +60,27 @@ const copyReferral = async () => {
 };
 
 onMounted(() => {
-  taskPinia.getTasksDaily();
-  // taskPinia.checkTask('YouTube',123);
+  taskPinia.getTasksDaily((data) => {
+    const platforms = ["telegram", "youtube", "discord", "tiktok", "x"];
+    const platformIcons = {
+      telegram: tg,
+      youtube: yt,
+      discord: discord,
+      tiktok: tiktok,
+      x: x,
+    };
+    tasks.value = [];
+    platforms.forEach((key) => {
+      if (data[key]) {
+        tasks.value.push({
+          ...data[key],
+          icon: platformIcons[key] || null,
+        });
+      }
+    });
+  });
+  taskPinia.checkTask("x", "@ton_society");
+  taskPinia.getFriends();
 });
 </script>
 <template>
@@ -101,7 +94,7 @@ onMounted(() => {
     >
       <span
         class="w-6 h-6 rounded-full btn-orange-rounded text-min flex items-center justify-center"
-        >BIT</span
+        >BIT </span
       >
       <div class="flex flex-col gap-0">
         <span class="text-base font-semibold"> Invite a friend </span>
@@ -127,16 +120,24 @@ onMounted(() => {
       </button>
     </div>
     <div>
-      <h3 class="font-nova !font-semibold !mb-3 text-2xl">Daily Tasks 5</h3>
-      <div class="flex flex-col gap-3">
+      <h3 class="font-nova !font-semibold !mb-3 text-2xl">
+        Daily Tasks {{ tasks.length || "" }}
+      </h3>
+      <div class="flex flex-col gap-3" v-if="tasks.length">
         <Task v-for="(task, i) of tasks" :key="i" :data="task" />
       </div>
+      <span v-else class="mx-auto flex justify-center opacity-60 text-base"
+        >All tasks done for today!</span
+      >
       <h3 class="font-nova !font-semibold !my-3 text-2xl">
         List of Friends (20)
       </h3>
-      <div class="flex flex-col gap-3">
+      <div v-if="tasks.length" class="flex flex-col gap-3">
         <Friend v-for="(task, i) of tasks" :key="i" :data="task" />
       </div>
+      <span v-else class="mx-auto flex justify-center opacity-60 text-base"
+        >You haven't referred any friends yet!</span
+      >
     </div>
   </div>
 </template>
