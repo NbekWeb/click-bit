@@ -56,6 +56,8 @@ onMounted(() => {
       loadingUrl.has('brand/') ||
       loadingUrl.has('buy/level/') ||
       loadingUrl.has('tasks/daily/') ||
+      loadingUrl.has('profile/referral/user/') ||
+      loadingUrl.has('complete/task/') ||
       loadingUrl.has('all/levels/')
     "
   >
