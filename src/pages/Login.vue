@@ -7,10 +7,13 @@ const loginPinia = useLogin();
 const router = useRouter();
 
 onMounted(() => {
-  let tg = window.Telegram.WebApp;
+  const tg = window.Telegram.WebApp;
   const initData = tg.initData;
 
-  loginPinia.postLogin({ initData }, () => {
+  const params = new URLSearchParams(initData);
+  const referral_code = params.get("start_param") || "";
+
+  loginPinia.postLogin({ initData, referral_code }, () => {
     router.push({ name: "Earn" });
   });
 });
