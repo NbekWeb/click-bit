@@ -19,7 +19,6 @@ import { message } from "ant-design-vue";
 const modules = [Navigation];
 const swiperInstance = ref(null);
 const requiredRef = ref(null);
-const swapping = ref(false);
 const bit = ref(0);
 const click = ref(0);
 
@@ -31,28 +30,14 @@ const { levels } = storeToRefs(levelPinia);
 const { rate, profile } = storeToRefs(profilePinia);
 
 watch(
-  bit,
-  (val) => {
+  [bit,rate],
+  ([bitVal,rateVal]) => {
     click.value =
-      val /
-      (rate.value?.bit_to_click_ratio > 0 ? rate.value?.bit_to_click_ratio : 1);
+    bitVal /
+      (rateVal?.bit_to_click_ratio > 0 ? rateVal?.bit_to_click_ratio : 1);
   },
   { immediate: true }
 );
-
-watch(
-  click,
-  (val) => {
-    bit.value = val * rate.value.click_to_bit_ratio;
-  },
-  { immediate: true }
-);
-
-const changeSwap = () => {
-  swapping.value = !swapping.value;
-  bit.value = 0;
-  click.value = 0;
-};
 
 const onSwiper = (swiper) => {
   swiperInstance.value = swiper;
@@ -66,29 +51,27 @@ const slideNext = () => {
   swiperInstance.value?.slideNext();
 };
 
-const bitBalance = computed(
-  () => profile.value?.user_level?.[0]?.bit_balance || 0
-);
-const clickBalance = computed(
-  () => profile.value?.user_level?.[0]?.click_balance || 0
+const bitBalance = ref(0);
+
+watch(
+  profile,
+  (newVal) => {
+    const maxBit = newVal?.user_level?.[0]?.bit_balance;
+    bit.value = maxBit;
+    bitBalance.value = maxBit;
+  },
+  { immediate: true }
 );
 
 const handleSwapClick = () => {
-  if (
-    !(
-      (!swapping.value && bit.value > bitBalance.value) ||
-      (!!swapping.value && click.value > clickBalance.value)
-    )
-  ) {
-    if (bit.value == 0 && !swapping.value) {
+  if (!(bit.value > bitBalance.value)) {
+    if (bit.value == 0) {
       message.error("Please enter the amount of Bit to swap.");
-    } else if (click.value == 0 && !!swapping.value) {
-      message.error("Please enter the amount of Click to swap.");
     } else {
       profilePinia.postSwap(
         {
-          type: !swapping.value ? "bit" : "click",
-          amount: !swapping.value ? bit.value : click.value,
+          type: "bit",
+          amount: bit.value,
         },
         () => {
           bit.value = 0;
@@ -147,7 +130,7 @@ const openAdd = () => {
         >swap
       </span>
       <div class="mt-1 mb-5 grid grid-cols-1 gap-6 relative">
-        <div class="grid grid-cols-1 gap-1" :class="!!swapping && 'order-2'">
+        <div class="grid grid-cols-1 gap-1">
           <div class="flex items-center gap-1">
             <span
               class="font-bold font-nova text-min w-6 h-6 flex items-center justify-center btn-orange-rounded"
@@ -160,15 +143,13 @@ const openAdd = () => {
             class="h-13 rounded-lg bg-dark-100 w-full px-3 flex items-center justify-end"
           >
             <format-input
-              :class="!swapping && bit > bitBalance && '!text-red-500'"
-              :readonly="!!swapping"
-              placeholder="10,000"
+              :class="bit > bitBalance && '!text-red-500'"
+              placeholder="1,000"
               v-model="bit"
             />
           </div>
         </div>
         <div
-          @click="changeSwap"
           class="flex justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-3.5"
         >
           <swap />
@@ -186,8 +167,8 @@ const openAdd = () => {
             class="h-13 rounded-lg bg-dark-100 w-full px-3 flex items-center justify-end"
           >
             <format-input
-              :readonly="!swapping"
-              :class="!!swapping && click > clickBalance && '!text-red-500'"
+              :class="bit > bitBalance && '!text-red-500'"
+              :readonly="true"
               placeholder="1,000"
               v-model="click"
             />
@@ -197,19 +178,9 @@ const openAdd = () => {
       <button
         @click="handleSwapClick"
         class="font-nova font-bold h-12 flex w-full justify-center items-center btn-orange"
-        :class="
-          ((!swapping && bit > bitBalance) ||
-            (!!swapping && click > clickBalance)) &&
-          'opacity-70 cursor-not-allowed'
-        "
+        :class="bit > bitBalance && 'opacity-70 cursor-not-allowed'"
       >
-        {{
-          !swapping && bit > bitBalance
-            ? "Insufficient Bits"
-            : !!swapping && click > clickBalance
-            ? "Insufficient Clicks"
-            : "SWAP"
-        }}
+        {{ bit > bitBalance ? "Insufficient Bits" : "SWAP" }}
       </button>
     </div>
     <div class="mt-4">
