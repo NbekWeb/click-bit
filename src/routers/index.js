@@ -65,7 +65,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const accessToken = localStorage.getItem("access_token");
-  // next();
+
   if (to.name === "Login") {
     return next();
   }

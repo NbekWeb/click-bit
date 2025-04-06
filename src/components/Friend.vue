@@ -1,5 +1,12 @@
 <script setup>
 import ProfileIcon from "@/components/icons/profile.vue";
+
+const props = defineProps({
+  data: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
 
 <template>

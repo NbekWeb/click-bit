@@ -72,7 +72,7 @@ const useTask = defineStore("task", {
           core.loadingUrl.delete("brand/");
         });
     },
-    checkTask(platform, id) {
+    checkTask(platform, id, callback) {
       const core = useCore();
       core.loadingUrl.add("complete/task/");
       api({
@@ -80,7 +80,7 @@ const useTask = defineStore("task", {
         method: "GET",
       })
         .then(({ data }) => {
-          // this.directory = data;
+          callback(data?.awarded_channels?.[0]?.message);
         })
         .catch(() => {})
         .finally(() => {

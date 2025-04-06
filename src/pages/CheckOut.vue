@@ -76,9 +76,9 @@ function goBuy() {
   }
 }
 
-function goInbox(){
-    onClose()
-    router.push({name:'Earn'})
+function goInbox() {
+  onClose();
+  router.push({ name: "Earn" });
 }
 
 onMounted(() => {

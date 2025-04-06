@@ -20,7 +20,7 @@ const profilePinia = useProfile();
 const taskPinia = useTask();
 
 const { profile, bonus } = storeToRefs(profilePinia);
-const { dailyTasks,friends } = storeToRefs(taskPinia);
+const { dailyTasks, friends } = storeToRefs(taskPinia);
 const tasks = ref([]);
 
 const referall = computed(
@@ -59,7 +59,8 @@ const copyReferral = async () => {
   }
 };
 
-onMounted(() => {
+function getTasks() {
+  dailyTasks.value = [];
   taskPinia.getTasksDaily((data) => {
     const platforms = ["telegram", "youtube", "discord", "tiktok", "x"];
     const platformIcons = {
@@ -79,7 +80,10 @@ onMounted(() => {
       }
     });
   });
-  taskPinia.checkTask("youtube", "3");
+}
+
+onMounted(() => {
+  getTasks();
   taskPinia.getFriends();
 });
 </script>
@@ -94,8 +98,8 @@ onMounted(() => {
     >
       <span
         class="w-6 h-6 rounded-full btn-orange-rounded text-min flex items-center justify-center"
-        >BIT </span
-      >
+        >BIT
+      </span>
       <div class="flex flex-col gap-0">
         <span class="text-base font-semibold"> Invite a friend </span>
         <p class="text-xs !mb-0">
@@ -124,16 +128,21 @@ onMounted(() => {
         Daily Tasks {{ tasks.length || "" }}
       </h3>
       <div class="flex flex-col gap-3" v-if="tasks.length">
-        <Task v-for="(task, i) of tasks" :key="i" :data="task" />
+        <Task
+          @confirmed="getTasks"
+          v-for="(task, i) of tasks"
+          :key="i"
+          :data="task"
+        />
       </div>
       <span v-else class="mx-auto flex justify-center opacity-60 text-base"
         >All tasks done for today!</span
       >
       <h3 class="font-nova !font-semibold !my-3 text-2xl">
-        List of Friends (20)
+        List of Friends {{ friends.length > 0 ? `(${friends.length})` : "" }}
       </h3>
-      <div v-if="tasks.length" class="flex flex-col gap-3">
-        <Friend v-for="(task, i) of tasks" :key="i" :data="task" />
+      <div v-if="friends.length" class="flex flex-col gap-3">
+        <Friend v-for="(friend, i) of friends" :key="i" :data="friend" />
       </div>
       <span v-else class="mx-auto flex justify-center opacity-60 text-base"
         >You haven't referred any friends yet!</span
