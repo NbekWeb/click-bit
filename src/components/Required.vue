@@ -17,8 +17,8 @@ const { video, click } = storeToRefs(videoPinia);
 
 const open = ref(false);
 const modal = ref(false);
-const countdown = ref(5); // Starting countdown from 5 seconds
-const isButtonVisible = ref(false); // Button visibility flag
+const countdown = ref(0);
+const isButtonVisible = ref(false);
 const isButtonDisabled = ref(true); // Initially disabled
 
 const showDrawer = () => {
@@ -41,21 +41,6 @@ const cancel = () => {
 
 defineExpose({ showDrawer });
 
-const startCountdown = () => {
-  videoRef.value?.play();
-  isButtonVisible.value = true;
-  isButtonDisabled.value = true;
-
-  const interval = setInterval(() => {
-    if (countdown.value > 1) {
-      countdown.value -= 1;
-    } else {
-      clearInterval(interval);
-      isButtonDisabled.value = false;
-    }
-  }, 1000);
-};
-
 const confirmAction = () => {
   isButtonVisible.value = false;
   countdown.value = 5;
@@ -66,9 +51,30 @@ const confirmAction = () => {
     profilePinia.getProfile(() => {
       videoPinia.getVideo(() => {
         isButtonVisible.value = false;
+        onClose();
       });
     });
   });
+};
+
+const startCountdown = () => {
+  const duration = Math.floor(videoRef.value?.duration || 0);
+  if (!duration) return;
+
+  countdown.value = duration;
+  videoRef.value?.play();
+  isButtonVisible.value = true;
+  isButtonDisabled.value = true;
+
+  const interval = setInterval(() => {
+    if (countdown.value > 1) {
+      countdown.value -= 1;
+    } else {
+      clearInterval(interval);
+      isButtonDisabled.value = false;
+      confirmAction();
+    }
+  }, 1000);
 };
 </script>
 
@@ -82,9 +88,9 @@ const confirmAction = () => {
       :open="open"
       @close="onClose"
     >
-      <a-spin :spinning="loadingUrl.has('videos/')">
+      <a-spin :spinning="loadingUrl.has('videos/') || !video?.files">
         <div
-          class="text-white relative h-[90vh] max-h-[90vh] flex flex-col gap-2 justify-between"
+          class="text-white relative h-[95vh] max-h-[90vh] flex flex-col gap-2 justify-between"
         >
           <span
             @click="onClose"
