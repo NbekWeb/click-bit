@@ -22,7 +22,10 @@ a:hover {
   --color-dark-300: #343131;
   --color-gray-200: #afafaf;
   --color-gray-400: #4e4949;
+  --color-gray-500: #5B5858;
   --color-orange-500: #ffa800;
+  --color-green-500: #44FF05;
+  
 }
 
 .btn-orange-rounded,

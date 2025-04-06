@@ -16,9 +16,7 @@ function goToChannel() {
   }
 }
 
-function confirm(){
-  
-}
+function confirm() {}
 </script>
 <template>
   <div
@@ -35,7 +33,7 @@ function confirm(){
       </div>
     </div>
     <button
-    @click="confirm"
+      @click="confirm"
       v-if="clickedType == 1"
       class="btn-primary px-2.5 hover:opacity-80 h-8 rounded-md"
     >

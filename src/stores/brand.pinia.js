@@ -24,7 +24,7 @@ const useBrand = defineStore("brand", {
           core.loadingUrl.delete("brands/");
         });
     },
-    getBrand(id) {
+    getBrand(id, callback) {
       const core = useCore();
       core.loadingUrl.add("brands/");
       api({
@@ -33,10 +33,27 @@ const useBrand = defineStore("brand", {
       })
         .then(({ data }) => {
           this.brand = data;
+          callback(data);
         })
         .catch(() => {})
         .finally(() => {
           core.loadingUrl.delete("brands/");
+        });
+    },
+    buyBrand(data, id, callback = () => {}) {
+      const core = useCore();
+      core.loadingUrl.add("brand/");
+      api({
+        url: `brand/buy/${id}/`,
+        method: "POST",
+        data,
+      })
+        .then(() => {
+          callback();
+        })
+        .catch(() => {})
+        .finally(() => {
+          core.loadingUrl.delete("brand/");
         });
     },
   },

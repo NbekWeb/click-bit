@@ -79,7 +79,7 @@ onMounted(() => {
       }
     });
   });
-  taskPinia.checkTask("x", "@ton_society");
+  taskPinia.checkTask("youtube", "3");
   taskPinia.getFriends();
 });
 </script>

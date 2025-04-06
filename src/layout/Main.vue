@@ -44,7 +44,6 @@ onMounted(() => {
   profilePinia.getReferalAmount();
   levelPinia.getLevels();
   videoPinia.getVideo();
-  profilePinia.getCurrency();
 });
 </script>
 

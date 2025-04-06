@@ -7,6 +7,8 @@ import CardOne from "@/pages/CardOne.vue";
 import Refer from "@/pages/Refer.vue";
 import Login from "@/pages/Login.vue";
 import Profile from "@/pages/Profile.vue";
+import CheckOut from "@/pages/CheckOut.vue";
+
 const routes = [
   {
     path: "/login",
@@ -46,6 +48,11 @@ const routes = [
         path: "refer",
         component: Refer,
         name: "Refer",
+      },
+      {
+        path: "check-out/:id",
+        component: CheckOut,
+        name: "CheckOut",
       },
     ],
   },

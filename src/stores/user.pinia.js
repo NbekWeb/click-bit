@@ -107,6 +107,22 @@ const useProfile = defineStore("profile", {
           core.loadingUrl.delete("profile/sound/");
         });
     },
+    changeEmail(data, callback = () => {}) {
+      const core = useCore();
+      core.loadingUrl.add("profile/email/");
+      api({
+        url: "profile/email/",
+        method: "PATCH",
+        data,
+      })
+        .then(() => {
+          callback();
+        })
+        .catch(() => {})
+        .finally(() => {
+          core.loadingUrl.delete("profile/email/");
+        });
+    },
 
     postSwap(data, callback = () => {}) {
       const core = useCore();
