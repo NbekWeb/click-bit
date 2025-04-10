@@ -1,6 +1,6 @@
 <script setup>
 import { TonConnectUI } from "@tonconnect/ui";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { RouterView, useRouter, useRoute } from "vue-router";
 import profileIcon from "../components/icons/profile.vue";
 import ton from "../components/icons/ton.vue";
@@ -14,6 +14,7 @@ import useBrand from "@/stores/brand.pinia.js";
 import useVideo from "@/stores/video.pinia";
 import { storeToRefs } from "pinia";
 
+const open = ref(false);
 const profilePinia = useProfile();
 const corePinia = useCore();
 const levelPinia = useLevel();
@@ -77,12 +78,15 @@ onMounted(() => {
       loadingUrl.has('all/levels/')
     "
   >
-    <div id="ton-connect-button"></div>
-
     <div class="px-3 w-full min-h-screen">
+      <div class="py-2 flex justify-center">
+
+        <div id="ton-connect-button"></div>
+      </div>
       <div class="flex justify-center pt-3 pb-5">
         <img src="@/assets/img/logo.png" class="h-6" />
       </div>
+
       <div class="h-10 flex items-center gap-3">
         <div
           @click="goProfile"

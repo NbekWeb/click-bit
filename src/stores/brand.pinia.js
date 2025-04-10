@@ -4,7 +4,7 @@ import useCore from "@/stores/core.pinia.js";
 
 const useBrand = defineStore("brand", {
   state: () => ({
-    brands: [],
+    brands: {},
     brand: {},
   }),
   actions: {
@@ -12,12 +12,12 @@ const useBrand = defineStore("brand", {
       const core = useCore();
       core.loadingUrl.add("brands/");
       api({
-        url: "brands/",
+        url: "tillo/brands/",
         method: "GET",
         params: { search },
       })
         .then(({ data }) => {
-          this.brands = data;
+          this.brands = data?.data?.brands;
         })
         .catch(() => {})
         .finally(() => {

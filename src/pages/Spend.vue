@@ -59,10 +59,11 @@ watch(
         class="text-sm !text-white/70 absolute right-2 cursor-pointer"
       />
     </div>
+    <!-- {{ brands }} -->
     <div class="mt-4 grid grid-cols-2 gap-2.5">
-      <template v-for="brand in brands" :key="brand.id">
-        <router-link :to="{ name: 'CardOne', params: { id: brand.id } }">
-          <img :src="brand?.image" class="w-full" />
+      <template v-for="brand in brands" :key="brand.slug">
+        <router-link :to="{ name: 'CardOne', params: { id: brand.slug } }">
+          <img :src="brand?.detail?.assets?.logo_url" class="w-full rounded-xl" />
         </router-link>
       </template>
     </div>
