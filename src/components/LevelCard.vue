@@ -15,6 +15,14 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  buyying: {
+    type: Boolean,
+    default: false,
+  },
+  decoration: {
+    type: Number,
+    default: 0,
+  },
 });
 
 function formatNumberWithDot(number) {
@@ -22,16 +30,16 @@ function formatNumberWithDot(number) {
 }
 
 function buy() {
-  if (!props.data?.is_active) {
+  if (!props.data?.is_active && !props.buyying) {
     levelPinia.buyLevel({ level_number: props.data.number }, () => {
       levelPinia.getLevels();
-      profilePinia.getProfile()
+      profilePinia.getProfile();
     });
   }
 }
 </script>
 <template>
-  <div>
+  <div :class="buyying && 'opacity-20 hover:cursor-not-allowed'">
     <div class="px-3.5">
       <button
         class="flex justify-center bg-dark-200 items-center h-7 w-full btn-orange"
@@ -49,7 +57,7 @@ function buy() {
         <div class="relative bg-dark-100 w-full h-1 rounded">
           <div
             class="flex rounded btn-primary h-full absolute top-0 left-0"
-            :style="`width: calc(${data?.earn_rate || 0} / 100 * 100%)`"
+            :style="`width: calc(${decoration} * 100%)`"
           ></div>
         </div>
         <div class="mt-3 text-xs flex flex-col items-center text-center">
@@ -72,7 +80,7 @@ function buy() {
             @click="buy"
             :class="[
               'h-8 rounded-lg w-full text-sm font-semibold',
-              data?.is_active
+              data?.is_active || buyying
                 ? 'btn-primary flex items-center justify-center opacity-60 cursor-not-allowed'
                 : 'btn-primary hover:opacity-80',
             ]"
