@@ -28,8 +28,9 @@ const useBrand = defineStore("brand", {
       const core = useCore();
       core.loadingUrl.add("brands/");
       api({
-        url: `brand/${id}/`,
-        method: "GET",
+        url: `issue/giftcard/`,
+        method: "POST",
+        data: { brand: id },
       })
         .then(({ data }) => {
           this.brand = data;

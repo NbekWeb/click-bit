@@ -79,8 +79,7 @@ onMounted(() => {
     "
   >
     <div class="px-3 w-full min-h-screen">
-      <div class="py-2 flex justify-center">
-
+      <div class="pb-2 pt-3 flex justify-end">
         <div id="ton-connect-button"></div>
       </div>
       <div class="flex justify-center pt-3 pb-5">
