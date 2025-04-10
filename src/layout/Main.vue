@@ -1,4 +1,5 @@
 <script setup>
+import { TonConnectUI } from "@tonconnect/ui";
 import { onMounted } from "vue";
 import { RouterView, useRouter, useRoute } from "vue-router";
 import profileIcon from "../components/icons/profile.vue";
@@ -38,6 +39,22 @@ function formatNumber(num) {
   return num;
 }
 
+const connectWallet = () => {
+  const tonConnectUI = new TonConnectUI({
+    manifestUrl: "https://click-bit.vercel.app/tonconnect-manifest.json",
+    buttonRootId: "ton-connect-button", // This is where the TonConnect button will be injected
+  });
+
+  tonConnectUI.connector
+    .connect()
+    .then((wallet) => {
+      console.log("Connected wallet:", wallet);
+    })
+    .catch((err) => {
+      console.log("Wallet connection failed:", err);
+    });
+};
+
 onMounted(() => {
   profilePinia.getProfile();
   profilePinia.getCurrency();
@@ -60,6 +77,8 @@ onMounted(() => {
       loadingUrl.has('all/levels/')
     "
   >
+    <div id="ton-connect-button"></div>
+
     <div class="px-3 w-full min-h-screen">
       <div class="flex justify-center pt-3 pb-5">
         <img src="@/assets/img/logo.png" class="h-6" />
@@ -115,7 +134,9 @@ onMounted(() => {
               >
             </div>
           </div>
-          <wallet class="text-2xl" />
+          <div @click="connectWallet" class="cursor-pointer">
+            <wallet class="text-2xl" />
+          </div>
         </div>
       </div>
       <div class="pb-22 pt-3">
