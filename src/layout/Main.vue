@@ -79,11 +79,12 @@ onMounted(() => {
     "
   >
     <div class="px-3 w-full min-h-screen">
-      <div class="pb-2 pt-3 flex justify-end">
-        <div id="ton-connect-button"></div>
-      </div>
-      <div class="flex justify-center pt-3 pb-5">
+      <div class="pb-2 pt-3 flex justify-end"></div>
+      <div class="flex justify-center items-center mb-5">
         <img src="@/assets/img/logo.png" class="h-6" />
+      </div>
+      <div class="flex justify-end mb-2">
+        <div id="ton-connect-button"></div>
       </div>
 
       <div class="h-10 flex items-center gap-3">
